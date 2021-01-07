@@ -1,0 +1,71 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+# homeassistant:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+http:
+  # base_url: !secret base_url
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+
+# Text to speech
+tts:
+  - platform: microsoft
+    api_key: !secret microsoft_tts
+    language: en-au
+    gender: Male
+    type: Catherine
+    region: westus2
+    base_url: https://hassio.jongriffith.com:8123
+
+  #- platform: google_translate
+  #  cache: true
+  #  cache_dir: /tmp/tts
+  #  time_memory: 300
+  #  base_url: https://hassio.jongriffith.com:8123
+  #  service_name: google_translate_say
+
+automation: !include automations.yaml
+binary_sensor: !include_dir_merge_list integrations/binary_sensors/
+camera: !include_dir_merge_list integrations/camera/
+device_tracker: !include_dir_merge_list integrations/device_tracker/
+google: !include_dir_merge_named integrations/google/
+history:
+  exclude:
+    domains:
+      - automation
+      - updater
+      - calendar
+      - camera
+      - device_tracker
+# influxdb: !include_dir_merge_named integrations/influxdb/
+input_boolean: !include_dir_merge_named integrations/input_boolean/
+input_datetime: !include_dir_merge_named integrations/input_datetime/
+input_number: !include_dir_merge_named integrations/input_number/
+light: !include_dir_merge_list integrations/lights/ # Light Switches
+media_player: !include_dir_merge_list integrations/media_players/
+neato: !include_dir_merge_named integrations/robots/ # Botvac
+notify: !include_dir_merge_list integrations/notify/
+octoprint: !include_dir_merge_named integrations/octoprint/
+recorder: !include_dir_merge_named integrations/recorder/
+spotify: !include_dir_merge_named integrations/spotify/
+sensor: !include_dir_merge_list integrations/sensors/
+folder_watcher: !include_dir_merge_list integrations/folder_watcher/
+scene: !include scenes.yaml
+script: !include scripts.yaml
+twilio: !include_dir_merge_named integrations/twilio/
+samsungtv: !include_dir_merge_list integrations/samsungtv/
+wake_on_lan:
+zone: !include_dir_merge_list zones/ # Zones
+zwave: !include_dir_merge_named zwave/ # Zwave Config
+
+stream:
+discovery:
+cloud:
+
+wemo:
+  discovery: false
+  static:
+    - 192.168.1.60 # Patio Lights
+    - 192.168.1.61 # Entertainment Center

@@ -1,0 +1,5 @@
+guest_bathroom_motion_brightness:
+  name: Guest Bathroom Motion Brightness
+  min: 13
+  max: 100
+  step: 1

@@ -1,0 +1,2 @@
+username: !secret neato_client_id
+password: !secret neato_secret

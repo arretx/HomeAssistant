@@ -1,0 +1,53 @@
+db_url: !secret mysql_db_url
+auto_purge: false
+purge_keep_days: 180
+#include:
+#  domains:
+#    - person
+#    - camera
+#    - vacuum
+#    - switch
+#    - fan
+#    - light
+#    - alarm_control_panel
+#    - automation
+#    - binary_sensor
+#    - camera
+#    - input_number
+#    - media_player
+#    - sensor
+#  entities:
+#    - sensor.ender3_switch
+#    - sensor.coffee_maker_status
+#    - sensor.desklamp1_status
+#    - sensor.dark_sky_temperature
+#    - sensor.candle_warmer1_switch
+#    - sensor.reading_lamp_1_status
+#    - sensor.candle_warmer1_switch
+#    - sensor.botvac_battery
+#    - switch.desk_lamp_1
+#    - sensor.guest_bathroom_temperature
+#    - sensor.guest_bathroom_humidity
+#    - binary_sensor.guest_bathroom_motion_1
+#    - binary_sensor.guest_bathroom_motion_2
+exclude:
+  domains:
+    - device_tracker
+    - calendar
+    - weather
+    - sun
+    - zwave
+  entity_globs:
+    - sensor.dark_sky*
+    - sensor.date*
+    - sensor.geocoded*
+    - sensor.hallow*
+    - sensor.icon*
+    - sensor.ns1_3d*
+    - sensor.internet_t*
+    - sensor.time*
+    - sensor.memory*
+    - sensor.*_brightness*
+    - sensor.disk*
+
+

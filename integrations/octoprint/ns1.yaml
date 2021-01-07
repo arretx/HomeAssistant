@@ -1,0 +1,17 @@
+host: 192.168.1.110
+api_key: C5CC692127D3485AB1E634A325C7C2B9
+name: cr10s_pro_3d_printer
+port: 5000
+bed: true
+number_of_tools: 2
+sensors:
+  monitored_conditions:
+    - 'Current State'
+    - 'Temperatures'
+    - 'Job Percentage'
+    - 'Time Elapsed'
+    - 'Time Remaining'
+binary_sensors:
+  monitored_conditions:
+    - 'Printing'
+    - 'Printing Error'

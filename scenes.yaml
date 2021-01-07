@@ -1,0 +1,6 @@
+- id: '1591419447162'
+  name: Reading Time
+  entities:
+    switch.sonoff_reading_lamp_1:
+      friendly_name: Reading Lamp 1
+      state: 'off'

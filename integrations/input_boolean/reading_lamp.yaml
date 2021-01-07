@@ -1,0 +1,14 @@
+reading_lamp_reset:
+  name: Once Per Day Reading Lamp
+  icon: mdi:lock
+
+vacation_mode:
+  name: Vacation Mode
+  icon: mdi:lock
+
+party_mode:
+  name: Party Mode
+  icon: mdi:lock
+
+coffee_timer:
+  name: Coffee Timer

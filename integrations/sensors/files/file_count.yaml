@@ -1,0 +1,60 @@
+- platform: folder
+  folder: /config/www/sounds/coffee
+
+- platform: folder
+  folder: /config/www/images/icons
+
+- platform: folder
+  folder: /config/www/sounds/coffee/halloween
+
+- platform: folder
+  folder: /config/www/sounds/coffee/christmas
+
+- platform: folder
+  folder: /config/www/sounds/holidays/newyearseve
+
+- platform: folder
+  folder: /config/www/sounds/holidays/newyearsday
+
+- platform: folder
+  folder: /config/www/sounds/pepito
+
+- platform: folder
+  folder: /config/www/pdf
+
+- platform: folder
+  folder: /config/www/images/cameras/camera2
+
+- platform: folder
+  folder: /config/www/images/cameras
+
+- platform: template
+  sensors:
+    pdf_inbox:
+      friendly_name: Inbox Count
+      value_template: "{{ states.sensor.pdf.attributes.number_of_files }}"
+    coffee_commercials:
+      friendly_name: Number of Coffee Commercials
+      value_template: "{{ states.sensor.coffee.attributes.number_of_files }}"
+    sensor_icons:
+      friendly_name: Number of Sensor Icons
+      value_template: "{{ states.sensor.icons.attributes.number_of_files }}"
+    halloween_sounds:
+      friendly_name: Number of Halloween Sounds
+      value_template: "{{ states.sensor.halloween.attributes.number_of_files }}"
+    christmas_coffee_commercials:
+      friendly_name: Number of Christmas Coffee Commercials
+      value_template: "{{ states.sensor.coffee_christmas.attributes.number_of_files }}"
+    newyearseve_sounds:
+      value_template: "{{ states.sensor.newyearseve.attributes.number_of_files }}"
+    independence_sounds:
+      value_template: "{{ states.sensor.independence.attributes.number_of_files }}"
+    pepito_sounds:
+      friendly_name: Number of Pepito Sounds
+      value_template: "{{ states.sensor.pepito.attributes.number_of_files }}"
+    images_camera_2:
+      friendly_name: Total Camera 2 Images
+      value_template: "{{ states.sensor.camera2.number_of_files }}"
+    images_all_cameras:
+      friendly_name: Total Camera Images
+      value_template: "{{ states.sensor.cameras.number_of_files }}"
