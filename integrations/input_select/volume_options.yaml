@@ -1,0 +1,11 @@
+volume_options:
+  name: Volume Options
+  options:
+    - "morning"
+    - "afternoon"
+    - "evening"
+    - "romance"
+    - "quiet"
+    - "blast"
+    - "lounge"
+  icon: mdi:volume-high

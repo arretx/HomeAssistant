@@ -42,3 +42,52 @@ guest_bath_light_timeout:
   max: 60
   step: 1
   mode: slider
+
+volume_morning:
+  name: Morning
+  min: 0.0
+  max: 1.0
+  step: 1
+  mode: box
+
+volume_afternoon:
+  name: Afternoon
+  min: 0.0
+  max: 1.0
+  step: 1
+  mode: box
+
+volume_evening:
+  name: Evening
+  min: 0.0
+  max: 1.0
+  step: 1
+  mode: box
+
+volume_romance:
+  name: Romance
+  min: 0.0
+  max: 1.0
+  step: 1
+  mode: box
+
+volume_quiet:
+  name: Quiet
+  min: 0.0
+  max: 1.0
+  step: 1
+  mode: box
+
+volume_blast:
+  name: Blast
+  min: 0.0
+  max: 1.0
+  step: 1
+  mode: box
+
+volume_lounge:
+  name: Lounge
+  min: 0.0
+  max: 1.0
+  step: 1
+  mode: box

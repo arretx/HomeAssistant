@@ -12,3 +12,7 @@ party_mode:
 
 coffee_timer:
   name: Coffee Timer
+
+kitty_litter:
+  name: Kitty Litter
+  icon: mdi:cat
