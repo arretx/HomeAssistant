@@ -1,0 +1,6 @@
+home:
+  devices:
+    - person.jon_griffith
+    - person.melanie_griffith
+  tolerance: 50
+  unit_of_measurement: mi

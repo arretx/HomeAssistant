@@ -49,6 +49,7 @@ media_player: !include_dir_merge_list integrations/media_players/
 neato: !include_dir_merge_named integrations/robots/ # Botvac
 notify: !include_dir_merge_list integrations/notify/
 octoprint: !include_dir_merge_named integrations/octoprint/
+proximity: !include_dir_merge_named integrations/proximity/
 recorder: !include_dir_merge_named integrations/recorder/
 spotify: !include_dir_merge_named integrations/spotify/
 sensor: !include_dir_merge_list integrations/sensors/
