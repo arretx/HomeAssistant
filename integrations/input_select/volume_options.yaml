@@ -9,3 +9,14 @@ volume_options:
     - "blast"
     - "lounge"
   icon: mdi:volume-high
+
+lighting_options:
+  name: Lighting Levels
+  options:
+    - "Early Morning 4AM-8AM"
+    - "Morning 8AM-Noon"
+    - "Afternoon Noon-4PM"
+    - "Early Evening 4PM-8PM"
+    - "Evening 8PM-Midnight"
+    - "Graveyard Midnight-4AM"
+  icon: mdi:clock

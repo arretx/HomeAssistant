@@ -60,7 +60,7 @@ twilio: !include_dir_merge_named integrations/twilio/
 samsungtv: !include_dir_merge_list integrations/samsungtv/
 wake_on_lan:
 zone: !include_dir_merge_list zones/ # Zones
-zwave: !include_dir_merge_named zwave/ # Zwave Config flig
+#zwave: !include_dir_merge_named zwave/ # Zwave Config flig
 
 stream:
 discovery:
