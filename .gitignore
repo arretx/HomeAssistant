@@ -23,4 +23,4 @@ pyozw.sqlite
 secrets.yaml
 zw*.xml
 custom_components
-cameras.yaml
+integrations/camera/cameras.yaml
