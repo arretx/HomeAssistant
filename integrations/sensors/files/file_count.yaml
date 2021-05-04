@@ -23,6 +23,9 @@
   folder: /config/www/pdf
 
 - platform: folder
+  folder: /config/www/pdf/taxes
+
+- platform: folder
   folder: /config/www/images/cameras/camera2
 
 - platform: folder
@@ -30,6 +33,9 @@
 
 - platform: template
   sensors:
+    tax_documents:
+      friendly_name: Tax Documents
+      value_template: "{{ states.sensor.taxes.attributes.number_of_files }}"
     pdf_inbox:
       friendly_name: Inbox Count
       value_template: "{{ states.sensor.pdf.attributes.number_of_files }}"

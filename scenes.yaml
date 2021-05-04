@@ -4,3 +4,67 @@
     switch.sonoff_reading_lamp_1:
       friendly_name: Reading Lamp 1
       state: 'off'
+- id: '1618638949639'
+  name: Kitchen On
+  entities:
+    light.kitchen:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      friendly_name: Kitchen Lights
+      supported_features: 33
+      state: 'on'
+    light.dining_room:
+      supported_color_modes:
+      - brightness
+      friendly_name: Dining Room Lights
+      supported_features: 33
+      state: 'off'
+- id: '1618639037234'
+  name: Dining Room On
+  entities:
+    light.kitchen:
+      supported_color_modes:
+      - brightness
+      friendly_name: Kitchen Lights
+      supported_features: 33
+      state: 'off'
+    light.dining_room:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 255
+      friendly_name: Dining Room Lights
+      supported_features: 33
+      state: 'on'
+- id: '1619595853815'
+  name: Sleepy Time
+  entities:
+    media_player.living_room_speaker:
+      friendly_name: Living Room
+      supported_features: 21389
+      state: 'off'
+    light.entertainment_center:
+      supported_color_modes:
+      - onoff
+      friendly_name: Entertainment Center
+      supported_features: 0
+      state: 'off'
+    light.living_room:
+      supported_color_modes:
+      - brightness
+      friendly_name: Living Room Lights
+      supported_features: 33
+      state: 'off'
+    light.living_room_fan_light:
+      supported_color_modes:
+      - brightness
+      friendly_name: Living Room Fan Light
+      supported_features: 33
+      state: 'off'
+    switch.reading_lamp:
+      friendly_name: Reading Lamp
+      icon: ''
+      state: 'off'
+  icon: mdi:bed

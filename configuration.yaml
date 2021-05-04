@@ -1,34 +1,43 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
-# homeassistant:
-
+homeassistant:
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.1.214
+        - 192.168.1.219
+      allow_bypass_login: false
+    - type: homeassistant
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
 #   base_url: example.duckdns.org:8123
 http:
-  # base_url: !secret base_url
-  ssl_certificate: /ssl/fullchain.pem
-  ssl_key: /ssl/privkey.pem
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.1.110
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
 
 # Text to speech
-tts:
-  - platform: microsoft
-    api_key: !secret microsoft_tts
-    language: en-au
-    gender: Male
-    type: Catherine
-    region: westus2
-    base_url: https://hassio.jongriffith.com:8123
+#tts:
+#  - platform: microsoft
+#    api_key: !secret microsoft_tts
+#    language: en-au
+#    gender: Male
+#    type: Catherine
+#    region: westus2
+#    base_url: https://ha.jongriffith.com
 
-  #- platform: google_translate
-  #  cache: true
-  #  cache_dir: /tmp/tts
-  #  time_memory: 300
-  #  base_url: https://hassio.jongriffith.com:8123
-  #  service_name: google_translate_say
+#- platform: google_translate
+#  cache: true
+#  cache_dir: /tmp/tts
+#  time_memory: 300
+#  base_url: https://hassio.jongriffith.com:8123
+#  service_name: google_translate_say
 
 automation: !include automations.yaml
 binary_sensor: !include_dir_merge_list integrations/binary_sensors/
 camera: !include_dir_merge_list integrations/camera/
+counter: !include_dir_merge_named integrations/counters/
 device_tracker: !include_dir_merge_list integrations/device_tracker/
 google: !include_dir_merge_named integrations/google/
 history:
@@ -45,6 +54,7 @@ input_datetime: !include_dir_merge_named integrations/input_datetime/
 input_number: !include_dir_merge_named integrations/input_number/
 input_select: !include_dir_merge_named integrations/input_select/
 light: !include_dir_merge_list integrations/lights/ # Light Switches
+mqtt: !include_dir_merge_named integrations/mqtt/ #MQTT Server on Ubuntu
 media_player: !include_dir_merge_list integrations/media_players/
 neato: !include_dir_merge_named integrations/robots/ # Botvac
 notify: !include_dir_merge_list integrations/notify/
@@ -53,7 +63,7 @@ proximity: !include_dir_merge_named integrations/proximity/
 recorder: !include_dir_merge_named integrations/recorder/
 spotify: !include_dir_merge_named integrations/spotify/
 sensor: !include_dir_merge_list integrations/sensors/
-folder_watcher: !include_dir_merge_list integrations/folder_watcher/
+#folder_watcher: !include_dir_merge_list integrations/folder_watcher/
 scene: !include scenes.yaml
 script: !include scripts.yaml
 twilio: !include_dir_merge_named integrations/twilio/
@@ -64,8 +74,8 @@ zone: !include_dir_merge_list zones/ # Zones
 
 stream:
 discovery:
+sun:
 cloud:
-
 wemo:
   discovery: false
   static:

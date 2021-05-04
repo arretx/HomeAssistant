@@ -1,6 +1,9 @@
 - platform: mjpeg
-  name: Toilet iPhone Cam
-  mjpeg_url: http://192.168.1.217:8081/video
-  username: admin
-  password: admin
-  authentication: basic
+  name: BabyCam1
+  mjpeg_url: http://192.168.20.21/video.mjpeg
+  still_image_url: http://192.168.20.21/image.jpg
+
+- platform: generic
+  still_image_url: http://192.168.1.165/jpg/image.jpg
+  stream_source: rtsp://admin:J0n@th@n@192.168.1.165:554/cam/realmonitor?channel=1&subtype=0
+  name: Amcrest

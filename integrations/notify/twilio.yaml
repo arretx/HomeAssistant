@@ -1,3 +1,0 @@
-- name: baby_announcements
-  platform: twilio_sms
-  from_number: +14805258372

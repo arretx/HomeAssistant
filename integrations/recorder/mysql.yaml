@@ -37,6 +37,7 @@ exclude:
     - weather
     - sun
     - zwave
+    - media_player
   entity_globs:
     - sensor.dark_sky*
     - sensor.date*
@@ -49,5 +50,4 @@ exclude:
     - sensor.memory*
     - sensor.*_brightness*
     - sensor.disk*
-
-
+    - sensor.adguard*

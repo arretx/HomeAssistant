@@ -1,0 +1,11 @@
+milk_supplement_intake_today:
+  initial: 0
+  step: 1
+
+milk_supplement_daily_goal:
+  initial: 150
+  step: 1
+
+milk_supplement_pumped_today:
+  initial: 0
+  step: 1
