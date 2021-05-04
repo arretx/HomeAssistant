@@ -1,5 +1,5 @@
 host: 192.168.1.110
-api_key: C5CC692127D3485AB1E634A325C7C2B9
+api_key: !secret octo_print_api
 name: cr10s_pro_3d_printer
 port: 5000
 bed: true
