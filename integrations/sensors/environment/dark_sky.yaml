@@ -22,7 +22,6 @@
     - ozone
     - temperature_high
     - temperature_low
-    - uv_index
     - moon_phase
     - sunrise_time
     - sunset_time

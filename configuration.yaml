@@ -5,18 +5,20 @@ homeassistant:
       trusted_networks:
         - 192.168.1.214
         - 192.168.1.219
+        - 192.168.1.145
       allow_bypass_login: false
     - type: homeassistant
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
 #   base_url: example.duckdns.org:8123
+# The following section is provided to ensure functionality due to reverse proxy settings on the Apache server at 192.168.1.110
 http:
   use_x_forwarded_for: true
   trusted_proxies:
     - 192.168.1.110
-  ip_ban_enabled: true
+  ip_ban_enabled: false
   login_attempts_threshold: 5
-
+api:
 # Text to speech
 #tts:
 #  - platform: microsoft
@@ -48,12 +50,19 @@ history:
       - calendar
       - camera
       - device_tracker
-# influxdb: !include_dir_merge_named integrations/influxdb/
+influxdb: !include_dir_merge_named integrations/influxdb/
 input_boolean: !include_dir_merge_named integrations/input_boolean/
 input_datetime: !include_dir_merge_named integrations/input_datetime/
 input_number: !include_dir_merge_named integrations/input_number/
 input_select: !include_dir_merge_named integrations/input_select/
 light: !include_dir_merge_list integrations/lights/ # Light Switches
+life360:
+  circles:
+    exclude:
+      - "Family"
+  show_as_state:
+    - driving
+    - moving
 mqtt: !include_dir_merge_named integrations/mqtt/ #MQTT Server on Ubuntu
 media_player: !include_dir_merge_list integrations/media_players/
 neato: !include_dir_merge_named integrations/robots/ # Botvac
@@ -66,6 +75,7 @@ sensor: !include_dir_merge_list integrations/sensors/
 #folder_watcher: !include_dir_merge_list integrations/folder_watcher/
 scene: !include scenes.yaml
 script: !include scripts.yaml
+template: !include_dir_merge_list integrations/template/
 twilio: !include_dir_merge_named integrations/twilio/
 samsungtv: !include_dir_merge_list integrations/samsungtv/
 wake_on_lan:

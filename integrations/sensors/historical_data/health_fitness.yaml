@@ -1,0 +1,47 @@
+- platform: history_stats
+  name: CFIS Visits Jon
+  entity_id: person.jon_griffith
+  state: "CFIS"
+  type: count
+  start: "{{ 0 }}"
+  end: "{{ now() }}"
+
+- platform: history_stats
+  name: CFIS Visits Melanie
+  entity_id: person.melanie_griffith
+  state: "CFIS"
+  type: count
+  start: "{{ 0 }}"
+  end: "{{ now() }}"
+
+- platform: history_stats
+  name: CFIS Visits Jon Week
+  entity_id: person.jon_griffith
+  state: "CFIS"
+  type: count
+  start: "{{ as_timestamp( now().replace(hour=0, minute=0, second=0) ) - now().weekday() * 86400 }}"
+  end: "{{ now() }}"
+
+- platform: history_stats
+  name: CFIS Visits Melanie Week
+  entity_id: person.melanie_griffith
+  state: "CFIS"
+  type: count
+  start: "{{ as_timestamp( now().replace(hour=0, minute=0, second=0) ) - now().weekday() * 86400 }}"
+  end: "{{ now() }}"
+
+- platform: history_stats
+  name: CFIS Visits Jon Month
+  entity_id: person.jon_griffith
+  state: "CFIS"
+  type: count
+  start: "{{ as_timestamp( now().replace(hour=0, minute=0, second=0) ) - (now().strftime('%d')|int) * 86400 }}"
+  end: "{{ now() }}"
+
+- platform: history_stats
+  name: CFIS Visits Melanie Month
+  entity_id: person.melanie_griffith
+  state: "CFIS"
+  type: count
+  start: "{{ as_timestamp( now().replace(hour=0, minute=0, second=0) ) - (now().strftime('%d')|int) * 86400 }}"
+  end: "{{ now() }}"

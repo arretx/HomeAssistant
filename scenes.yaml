@@ -1,9 +1,40 @@
 - id: '1591419447162'
-  name: Reading Time
+  name: Story Time
   entities:
-    switch.sonoff_reading_lamp_1:
-      friendly_name: Reading Lamp 1
+    light.living_room:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 8
+      friendly_name: Living Room Lights
+      supported_features: 33
+      state: 'on'
+    switch.entertainment_center:
+      friendly_name: Entertainment Center
       state: 'off'
+    light.living_room_fan_light:
+      supported_color_modes:
+      - brightness
+      friendly_name: Living Room Fan Light
+      supported_features: 33
+      state: 'off'
+    media_player.living_room_speaker:
+      volume_level: 0.4000000059604645
+      is_volume_muted: false
+      media_content_id: https://www.home-assistant.io/images/cast/splash.png
+      media_position: 0
+      media_position_updated_at: '2021-05-04T19:45:40.711470+00:00'
+      app_id: CC1AD845
+      app_name: Default Media Receiver
+      entity_picture_local:
+      friendly_name: Living Room
+      supported_features: 21391
+      state: idle
+    switch.reading_lamp:
+      friendly_name: Reading Lamp
+      icon: ''
+      state: 'on'
+  icon: mdi:book
 - id: '1618638949639'
   name: Kitchen On
   entities:
@@ -41,10 +72,6 @@
 - id: '1619595853815'
   name: Sleepy Time
   entities:
-    media_player.living_room_speaker:
-      friendly_name: Living Room
-      supported_features: 21389
-      state: 'off'
     light.entertainment_center:
       supported_color_modes:
       - onoff
@@ -54,9 +81,11 @@
     light.living_room:
       supported_color_modes:
       - brightness
+      color_mode: brightness
+      brightness: 8
       friendly_name: Living Room Lights
       supported_features: 33
-      state: 'off'
+      state: 'on'
     light.living_room_fan_light:
       supported_color_modes:
       - brightness

@@ -10,19 +10,23 @@ import requests
 import uuid
 
 from datetime import datetime
-from urllib.parse import urljoin, urlencode, urlparse, parse_qs
+from threading import Lock
 from typing import Any, Dict, Generator, Optional
+from urllib.parse import urljoin, urlencode, urlparse, parse_qs
 
 from . import(
     as_list,
     gen_uuid,
     AuthHTTPAdapter,
+    CoreVersion,
     DATA_ROOT,
     DEFAULT_COUNTRY,
     DEFAULT_LANGUAGE,
 )
 from . import core_exceptions as exc
 from .device import DeviceInfo, DEFAULT_TIMEOUT
+
+CORE_VERSION = CoreVersion.CoreV2
 
 # v2
 V2_API_KEY = "VGhpblEyLjAgU0VSVklDRQ=="
@@ -47,6 +51,7 @@ OAUTH_SECRET_KEY = "c053c2a6ddeb7ad97cb0eed0dcb31cf8"
 DATE_FORMAT = "%a, %d %b %Y %H:%M:%S +0000"
 
 API2_ERRORS = {
+    "0101": exc.DeviceNotFound,
     "0102": exc.NotLoggedInError,
     "0106": exc.NotConnectedError,
     "0100": exc.FailedRequestError,
@@ -156,11 +161,7 @@ def thinq2_get(
     if "resultCode" not in out:
         raise exc.APIError("-1", out)
 
-    code = out["resultCode"]
-    if code != "0000":
-        if code in API2_ERRORS:
-            raise API2_ERRORS[code]()
-        raise exc.APIError(code, "error")
+    manage_lge_result(out, True)
     return out["result"]
 
 
@@ -172,6 +173,7 @@ def lgedm2_post(
     headers={},
     country=DEFAULT_COUNTRY,
     language=DEFAULT_LANGUAGE,
+    is_api_v2=False,
 ):
     """Make an HTTP request in the format used by the API servers."""
 
@@ -183,7 +185,7 @@ def lgedm2_post(
 
     res = s.post(
         url,
-        json={DATA_ROOT: data},
+        json=data if is_api_v2 else {DATA_ROOT: data},
         headers=thinq2_headers(
             access_token=access_token,
             user_number=user_number,
@@ -197,16 +199,33 @@ def lgedm2_post(
     out = res.json()
     _LOGGER.debug("lgedm2_post after: %s", out)
 
-    msg = out.get(DATA_ROOT)
+    return manage_lge_result(out, is_api_v2)
+
+
+def manage_lge_result(result, is_api_v2=False):
+    """Manage the result from a get or a post to lge server."""
+
+    if is_api_v2:
+        if "resultCode" in result:
+            code = result["resultCode"]
+            if code != "0000":
+                if code in API2_ERRORS:
+                    raise API2_ERRORS[code]()
+                message = result.get("result", "error")
+                raise exc.APIError(code, message)
+
+        return result
+
+    msg = result.get(DATA_ROOT)
     if not msg:
-        raise exc.APIError("-1", out)
+        raise exc.APIError("-1", result)
 
     if "returnCd" in msg:
         code = msg["returnCd"]
         if code != "0000":
-            message = msg["returnMsg"]
             if code in API2_ERRORS:
                 raise API2_ERRORS[code]()
+            message = msg["returnMsg"]
             raise exc.APIError(code, message)
 
     return msg
@@ -423,6 +442,24 @@ class Session(object):
             self.auth.user_number,
             country=self.auth.gateway.country,
             language=self.auth.gateway.language,
+            is_api_v2=False,
+        )
+
+    def post2(self, path, data=None):
+        """Make a POST request to the APIv2 server.
+
+        This is like `lgedm_post`, but it pulls the context for the
+        request from an active Session.
+        """
+        url = urljoin(self.auth.gateway.api2_root + "/", path)
+        return lgedm2_post(
+            url,
+            data,
+            self.auth.access_token,
+            self.auth.user_number,
+            country=self.auth.gateway.country,
+            language=self.auth.gateway.language,
+            is_api_v2=True,
         )
 
     def get(self, path):
@@ -520,23 +557,54 @@ class Session(object):
             {"cmd": "Mon", "cmdOpt": "Stop", "deviceId": device_id, "workId": work_id},
         )
 
-    def set_device_controls(self, device_id, values):
+    def set_device_controls(self, device_id, ctrl_key, command=None, value=None, data=None):
         """Control a device's settings.
 
         `values` is a key/value map containing the settings to update.
         """
+        res = {}
+        payload = None
+        if isinstance(ctrl_key, dict):
+            payload = ctrl_key
+        elif command is not None:
+            payload = {
+                "cmd": ctrl_key,
+                "cmdOpt": command,
+                "value": value or "",
+                "data": data or "",
+            }
 
-        return self.post(
-            "rti/rtiControl",
-            {
-                "cmd": "Control",
-                "cmdOpt": "Set",
-                "value": values,
+        if payload:
+            payload.update({
                 "deviceId": device_id,
                 "workId": gen_uuid(),
-                "data": "",
-            },
-        )
+            })
+            res = self.post("rti/rtiControl", payload)
+            _LOGGER.debug("Set V1 result: %s", str(res))
+
+        return res
+
+    def set_device_v2_controls(self, device_id, ctrl_key, command=None, key=None, value=None):
+        """Control a device's settings based on api V2."""
+
+        res = {}
+        payload = None
+        path = f"service/devices/{device_id}/control-sync"
+        if isinstance(ctrl_key, dict):
+            payload = ctrl_key
+        elif command is not None:
+            payload = {
+                "ctrlKey": ctrl_key,
+                "command": command,
+                "dataKey": key or "",
+                "dataValue": value or "",
+            }
+
+        if payload:
+            res = self.post2(path, payload)
+            _LOGGER.debug("Set V2 result: %s", str(res))
+
+        return res
 
     def get_device_config(self, device_id, key, category="Config"):
         """Get a device configuration option.
@@ -558,7 +626,12 @@ class Session(object):
         )
         return res["returnData"]
 
+    def get_device_v2_settings(self, device_id):
+        """Get a device's settings based on api V2."""
+        return self.get2(f"service/devices/{device_id}")
+
     def delete_permission(self, device_id):
+        """Delete permission on V1 device after a control command"""
         self.post("rti/delControlPermission", {"deviceId": device_id})
 
 
@@ -580,6 +653,7 @@ class ClientV2(object):
         self._auth: Optional[Auth] = auth
         self._session: Optional[Session] = session
         self._last_device_update = datetime.now()
+        self._lock = Lock()
 
         # The last list of devices we got from the server. This is the
         # raw JSON list data describing the devices.
@@ -597,8 +671,11 @@ class ClientV2(object):
     def _inject_thinq2_device(self):
         """This is used only for debug"""
         data_file = os.path.dirname(os.path.realpath(__file__)) + "/deviceV2.txt"
-        with open(data_file, "r") as f:
-            device_v2 = json.load(f)
+        try:
+            with open(data_file, "r") as f:
+                device_v2 = json.load(f)
+        except FileNotFoundError:
+            return
         for d in device_v2:
             self._devices.append(d)
             _LOGGER.debug("Injected debug device: %s", d)
@@ -609,6 +686,11 @@ class ClientV2(object):
             # for debug
             # self._inject_thinq2_device()
             # for debug
+
+    @property
+    def api_version(self):
+        """Return core API version"""
+        return CORE_VERSION
 
     @property
     def gateway(self) -> Gateway:
@@ -642,9 +724,12 @@ class ClientV2(object):
         return (DeviceInfo(d) for d in self._devices)
 
     def refresh_devices(self):
-        call_time = datetime.now()
-        difference = (call_time - self._last_device_update).total_seconds()
-        if difference > MIN_TIME_BETWEEN_UPDATE:
+        """Refresh the devices information for this client"""
+        with self._lock:
+            call_time = datetime.now()
+            difference = (call_time - self._last_device_update).total_seconds()
+            if difference <= MIN_TIME_BETWEEN_UPDATE:
+                return
             self._load_devices(True)
             self._last_device_update = call_time
 

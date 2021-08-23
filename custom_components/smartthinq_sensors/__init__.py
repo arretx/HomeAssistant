@@ -6,18 +6,17 @@ Support for LG SmartThinQ device.
 import asyncio
 import logging
 import time
-from datetime import timedelta
+import voluptuous as vol
+
+from datetime import datetime, timedelta
 from requests import exceptions as reqExc
+from threading import Lock
 from typing import Dict
 
 from .wideq.core import Client
 from .wideq.core_v2 import ClientV2, CoreV2HttpAdapter
-from .wideq.device import DeviceType
-from .wideq.dishwasher import DishWasherDevice
-from .wideq.dryer import DryerDevice
-from .wideq.styler import StylerDevice
-from .wideq.washer import WasherDevice
-from .wideq.refrigerator import RefrigeratorDevice
+from .wideq.device import UNIT_TEMP_CELSIUS, UNIT_TEMP_FAHRENHEIT, DeviceType
+from .wideq.factory import get_lge_device
 
 from .wideq.core_exceptions import (
     InvalidCredentialError,
@@ -26,16 +25,15 @@ from .wideq.core_exceptions import (
     TokenError,
 )
 
-import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 
-from homeassistant import config_entries
+from homeassistant.config_entries import SOURCE_IMPORT, ConfigEntry
+from homeassistant.const import CONF_REGION, CONF_TOKEN, TEMP_CELSIUS
+from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
-from homeassistant.helpers.typing import HomeAssistantType
 from homeassistant.util import Throttle
-
-from homeassistant.const import CONF_REGION, CONF_TOKEN
 
 from .const import (
     CLIENT,
@@ -51,13 +49,9 @@ from .const import (
     STARTUP,
 )
 
-ATTR_MODEL = "model"
-ATTR_MAC_ADDRESS = "mac_address"
-
 MAX_RETRIES = 3
-MAX_CONN_RETRIES = 2
-MAX_LOOP_WARN = 3
 MAX_UPDATE_FAIL_ALLOWED = 10
+MIN_TIME_BETWEEN_CLI_REFRESH = 10
 # not stress to match cloud if multiple call
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=10)
 
@@ -122,16 +116,12 @@ class LGEAuthentication:
 
     def createClientFromToken(self, token, oauth_url=None, oauth_user_num=None):
 
-        client = None
-        try:
-            if self._use_api_v2:
-                client = ClientV2.from_token(
-                    oauth_url, token, oauth_user_num, self._region, self._language
-                )
-            else:
-                client = Client.from_token(token, self._region, self._language)
-        except Exception:
-            _LOGGER.exception("Error connecting to ThinQ")
+        if self._use_api_v2:
+            client = ClientV2.from_token(
+                oauth_url, token, oauth_user_num, self._region, self._language
+            )
+        else:
+            client = Client.from_token(token, self._region, self._language)
 
         return client
 
@@ -151,14 +141,14 @@ async def async_setup(hass, config):
     if conf is not None:
         hass.async_create_task(
             hass.config_entries.flow.async_init(
-                DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=conf
+                DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
             )
         )
 
     return True
 
 
-async def async_setup_entry(hass: HomeAssistantType, config_entry):
+async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
     """
     This class is called by the HomeAssistant framework when a configuration entry is provided.
     """
@@ -174,7 +164,7 @@ async def async_setup_entry(hass: HomeAssistantType, config_entry):
 
     _LOGGER.info(STARTUP)
     _LOGGER.info(
-        "Initializing SmartThinQ platform with region: %s - language: %s",
+        "Initializing ThinQ platform with region: %s - language: %s",
         region,
         language,
     )
@@ -185,24 +175,31 @@ async def async_setup_entry(hass: HomeAssistantType, config_entry):
     # raising ConfigEntryNotReady platform setup will be retried
     lgeauth = LGEAuthentication(region, language, use_api_v2)
     lgeauth.initHttpAdapter(use_tls_v1, exclude_dh)
-    client = await hass.async_add_executor_job(
-        lgeauth.createClientFromToken, refresh_token, oauth_url, oauth_user_num
-    )
-    if not client:
-        _LOGGER.warning("Connection not available. SmartThinQ platform not ready")
+    try:
+        client = await hass.async_add_executor_job(
+            lgeauth.createClientFromToken, refresh_token, oauth_url, oauth_user_num
+        )
+    except InvalidCredentialError:
+        _LOGGER.error("Invalid ThinQ credential error. Component setup aborted")
+        return False
+
+    except Exception:
+        _LOGGER.warning(
+            "Connection not available. ThinQ platform not ready", exc_info=True
+        )
         raise ConfigEntryNotReady()
 
     if not client.hasdevices:
-        _LOGGER.error("No SmartThinQ devices found. Component setup aborted")
+        _LOGGER.error("No ThinQ devices found. Component setup aborted")
         return False
 
-    _LOGGER.info("SmartThinQ client connected")
+    _LOGGER.info("ThinQ client connected")
 
     try:
         lge_devices = await lge_devices_setup(hass, client)
     except Exception:
         _LOGGER.warning(
-            "Connection not available. SmartThinQ platform not ready", exc_info=True,
+            "Connection not available. ThinQ platform not ready", exc_info=True
         )
         raise ConfigEntryNotReady()
 
@@ -213,6 +210,9 @@ async def async_setup_entry(hass: HomeAssistantType, config_entry):
             " Please remove and re-add integration from HA user interface to"
             " enable the use of ThinQ APIv2"
         )
+
+    # remove device not available anymore
+    await cleanup_orphan_lge_devices(hass, config_entry.entry_id, client)
 
     hass.data.setdefault(DOMAIN, {}).update(
         {CLIENT: client, LGE_DEVICES: lge_devices}
@@ -226,7 +226,7 @@ async def async_setup_entry(hass: HomeAssistantType, config_entry):
     return True
 
 
-async def async_unload_entry(hass, config_entry):
+async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry):
     """Unload a config entry."""
     await asyncio.gather(
         *[
@@ -241,6 +241,11 @@ async def async_unload_entry(hass, config_entry):
 
 
 class LGEDevice:
+
+    _client_lock = Lock()
+    _client_connected = True
+    _last_client_refresh = datetime.min
+
     def __init__(self, device, hass):
         """initialize a LGE Device."""
 
@@ -249,7 +254,7 @@ class LGEDevice:
         self._name = device.device_info.name
         self._device_id = device.device_info.id
         self._type = device.device_info.type
-        self._mac = device.device_info.macaddress or "N/A"
+        self._mac = device.device_info.macaddress
         self._firmware = device.device_info.firmware
 
         self._model = f"{device.device_info.model_name}"
@@ -279,6 +284,10 @@ class LGEDevice:
         return self._available and self._disconnected
 
     @property
+    def device(self):
+        return self._device
+
+    @property
     def name(self) -> str:
         return self._name
 
@@ -299,15 +308,6 @@ class LGEDevice:
         return self._device.available_features
 
     @property
-    def state_attributes(self):
-        """Return the optional state attributes."""
-        data = {
-            ATTR_MODEL: self._model,
-            ATTR_MAC_ADDRESS: self._mac,
-        }
-        return data
-
-    @property
     def device_info(self):
         data = {
             "identifiers": {(DOMAIN, self._device_id)},
@@ -315,6 +315,8 @@ class LGEDevice:
             "manufacturer": "LG",
             "model": f"{self._model} ({self._type.name})",
         }
+        if self._mac:
+            data["connections"] = {(CONNECTION_NETWORK_MAC, self._mac)}
         if self._firmware:
             data["sw_version"] = self._firmware
 
@@ -350,7 +352,7 @@ class LGEDevice:
             name=f"{DOMAIN}-{self._name}",
             update_method=self.async_device_update,
             # Polling interval. Will only be polled if there are subscribers.
-            update_interval=SCAN_INTERVAL,
+            update_interval=SCAN_INTERVAL
         )
         await coordinator.async_refresh()
         self._coordinator = coordinator
@@ -381,6 +383,22 @@ class LGEDevice:
         else:
             _LOGGER.debug(msg, *args, **kwargs)
 
+    def _refresh_client(self, refresh_gateway=False):
+        """Refresh the devices shared client"""
+        with LGEDevice._client_lock:
+            call_time = datetime.now()
+            difference = (call_time - LGEDevice._last_client_refresh).total_seconds()
+            if difference <= MIN_TIME_BETWEEN_CLI_REFRESH:
+                return LGEDevice._client_connected
+
+            LGEDevice._last_client_refresh = datetime.now()
+            LGEDevice._client_connected = False
+            _LOGGER.debug("ThinQ session not connected. Trying to reconnect....")
+            self._device.client.refresh(refresh_gateway)
+            _LOGGER.debug("ThinQ session reconnected")
+            LGEDevice._client_connected = True
+            return True
+
     def _restart_monitor(self):
         """Restart the device monitor"""
         if not (self._disconnected or self._not_logged):
@@ -393,7 +411,9 @@ class LGEDevice:
 
         try:
             if self._not_logged:
-                self._device.client.refresh(refresh_gateway)
+                if not self._refresh_client(refresh_gateway):
+                    return
+
                 self._not_logged = False
                 self._disconnected = True
 
@@ -401,15 +421,17 @@ class LGEDevice:
             self._disconnected = False
 
         except NotConnectedError:
-            self._log_error("Device not connected. Status not available")
+            self._log_error("Device %s not connected. Status not available", self._name)
             self._disconnected = True
 
         except NotLoggedInError:
-            self._log_error("ThinQ Session expired. Refreshing")
+            _LOGGER.warning("Connection to ThinQ not available, will be retried")
             self._not_logged = True
 
         except InvalidCredentialError:
-            self._log_error("Connection to ThinQ failed. Check your login credential")
+            _LOGGER.error(
+                "Invalid credential connecting to ThinQ. Reconfigure integration with valid login credential"
+            )
             self._not_logged = True
 
         except (reqExc.ConnectionError, reqExc.ConnectTimeout, reqExc.ReadTimeout):
@@ -424,14 +446,13 @@ class LGEDevice:
     @Throttle(MIN_TIME_BETWEEN_UPDATES)
     def _device_update(self):
         """Update device state"""
-        _LOGGER.debug("Updating ThinQ device %s", self.name)
+        _LOGGER.debug("Updating ThinQ device %s", self._name)
 
         if self._disconnected or self._not_logged:
             if self._update_fail_count < MAX_UPDATE_FAIL_ALLOWED:
                 self._update_fail_count += 1
             self._set_available()
 
-        conn_retry = 0
         for iteration in range(MAX_RETRIES):
             _LOGGER.debug("Polling...")
 
@@ -443,28 +464,27 @@ class LGEDevice:
             self._restart_monitor()
 
             if self._disconnected or self._not_logged:
-                conn_retry += 1
                 if self._update_fail_count >= MAX_UPDATE_FAIL_ALLOWED:
 
                     if self._critical_status():
                         _LOGGER.error(
                             "Connection to ThinQ for device %s is not available. Connection will be retried",
-                            self.name,
+                            self._name,
                         )
                         if self._not_logged_count >= 60:
                             self._refresh_gateway = True
                         self._set_available()
 
                     if self._state.is_on:
-                        _LOGGER.debug("Connection not available. Device status reset")
+                        _LOGGER.warning(
+                            "Status for device %s was reset because not connected",
+                            self._name
+                        )
                         self._state = self._device.reset_status()
                         return
 
-                if conn_retry >= MAX_CONN_RETRIES or self._disconnected:
-                    _LOGGER.debug("Connection not available. Status update failed")
-                    return
-
-                continue
+                _LOGGER.debug("Connection not available. Status update failed")
+                return
 
             try:
                 state = self._device.poll()
@@ -478,8 +498,8 @@ class LGEDevice:
                 return
 
             except InvalidCredentialError:
-                self._log_error(
-                    "Connection to ThinQ failed. Check your login credential"
+                _LOGGER.error(
+                    "Invalid credential connecting to ThinQ. Reconfigure integration with valid login credential"
                 )
                 self._not_logged = True
                 return
@@ -523,35 +543,30 @@ async def lge_devices_setup(hass, client) -> dict:
 
     wrapped_devices = {}
     device_count = 0
+    temp_unit = UNIT_TEMP_CELSIUS
+    if hass.config.units.temperature_unit != TEMP_CELSIUS:
+        temp_unit = UNIT_TEMP_FAHRENHEIT
 
     for device in client.devices:
         device_id = device.id
         device_name = device.name
         device_type = device.type
+        network_type = device.network_type
         model_name = device.model_name
         device_count += 1
 
-        dev = None
-        if device_type in [DeviceType.WASHER, DeviceType.TOWER_WASHER]:
-            dev = LGEDevice(WasherDevice(client, device), hass)
-        elif device_type in [DeviceType.DRYER, DeviceType.TOWER_DRYER]:
-            dev = LGEDevice(DryerDevice(client, device), hass)
-        elif device_type == DeviceType.STYLER:
-            dev = LGEDevice(StylerDevice(client, device), hass)
-        elif device_type == DeviceType.DISHWASHER:
-            dev = LGEDevice(DishWasherDevice(client, device), hass)
-        elif device_type == DeviceType.REFRIGERATOR:
-            dev = LGEDevice(RefrigeratorDevice(client, device), hass)
-
-        if not dev:
+        lge_dev = get_lge_device(client, device, temp_unit)
+        if not lge_dev:
             _LOGGER.info(
-                "Found unsupported LGE Device. Name: %s - Type: %s - InfoUrl: %s",
+                "Found unsupported LGE Device. Name: %s - Type: %s - NetworkType: %s - InfoUrl: %s",
                 device_name,
                 device_type.name,
+                network_type.name,
                 device.model_info_url,
             )
             continue
 
+        dev = LGEDevice(lge_dev, hass)
         if not await dev.init_device():
             _LOGGER.error(
                 "Error initializing LGE Device. Name: %s - Type: %s - InfoUrl: %s",
@@ -572,3 +587,29 @@ async def lge_devices_setup(hass, client) -> dict:
 
     _LOGGER.info("Founds %s LGE device(s)", str(device_count))
     return wrapped_devices
+
+
+async def cleanup_orphan_lge_devices(hass, entry_id, client):
+    """Delete devices that are not registered in LG client app"""
+
+    # Load lg devices from registry
+    device_registry = await hass.helpers.device_registry.async_get_registry()
+    all_lg_dev_entries = (
+        hass.helpers.device_registry.async_entries_for_config_entry(
+            device_registry, entry_id
+        )
+    )
+
+    # get list of valid devices
+    valid_lg_dev_ids = []
+    for device in client.devices:
+        dev = device_registry.async_get_device({(DOMAIN, device.id)})
+        if dev is not None:
+            valid_lg_dev_ids.append(dev.id)
+
+    # clean-up invalid devices
+    for dev_entry in all_lg_dev_entries:
+        dev_id = dev_entry.id
+        if dev_id in valid_lg_dev_ids:
+            continue
+        device_registry.async_remove_device(dev_id)

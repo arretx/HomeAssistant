@@ -31,13 +31,6 @@ purge_keep_days: 180
 #    - binary_sensor.guest_bathroom_motion_1
 #    - binary_sensor.guest_bathroom_motion_2
 exclude:
-  domains:
-    - device_tracker
-    - calendar
-    - weather
-    - sun
-    - zwave
-    - media_player
   entity_globs:
     - sensor.dark_sky*
     - sensor.date*
@@ -51,3 +44,6 @@ exclude:
     - sensor.*_brightness*
     - sensor.disk*
     - sensor.adguard*
+    - sensor.*_uptime
+    - sensor.*rx
+    - sensor.*tx

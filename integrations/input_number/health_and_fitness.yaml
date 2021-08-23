@@ -1,0 +1,13 @@
+milliliters:
+  name: Milliliters
+  min: 0.0
+  max: 20000
+  step: 1
+  mode: box
+
+water_daily_goal_jon:
+  name: Jon's Daily Water Goal
+  min: 1250.0
+  max: 20000
+  step: 1
+  mode: slider
