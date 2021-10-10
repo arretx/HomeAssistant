@@ -20,3 +20,9 @@ lighting_options:
     - "Evening 8PM-Midnight"
     - "Graveyard Midnight-4AM"
   icon: mdi:clock
+
+global_audio_mode:
+  name: Global Audio Mode
+  options:
+    - "Mute All"
+    - "Normal"

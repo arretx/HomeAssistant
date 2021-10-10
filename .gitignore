@@ -10,11 +10,13 @@ image
 twilio
 node-red
 tts
-www
+www/*
+!www/sounds
 zones
 .google.token
 google_calendars.yaml
 *.db
+*.log.*
 *.log
 known_devices.yaml
 options.xml
