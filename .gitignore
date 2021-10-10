@@ -16,6 +16,7 @@ zones
 google_calendars.yaml
 *.db
 *.log
+*.log.*
 known_devices.yaml
 options.xml
 OZW_Log*
