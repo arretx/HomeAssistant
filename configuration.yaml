@@ -6,6 +6,10 @@ homeassistant:
         - 192.168.1.214
         - 192.168.1.219
         - 192.168.1.145
+        - 192.168.1.242
+        - 192.168.1.45
+        - 192.168.1.35
+        - 192.168.1.132
       allow_bypass_login: false
     - type: homeassistant
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
@@ -15,7 +19,7 @@ homeassistant:
 http:
   use_x_forwarded_for: true
   trusted_proxies:
-    - 192.168.1.110
+    - 192.168.1.200
   ip_ban_enabled: false
   login_attempts_threshold: 5
 api:
@@ -80,6 +84,7 @@ twilio: !include_dir_merge_named integrations/twilio/
 samsungtv: !include_dir_merge_list integrations/samsungtv/
 wake_on_lan:
 zone: !include_dir_merge_list zones/ # Zones
+zoneminder: !include_dir_merge_list integrations/zoneminder/
 #zwave: !include_dir_merge_named zwave/ # Zwave Config flig
 
 stream:
