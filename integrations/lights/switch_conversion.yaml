@@ -9,3 +9,7 @@
 - platform: switch
   name: Workshop Desk Lamp
   entity_id: switch.sonoff_desk_lamp_1
+
+- platform: switch
+  name: Laundry Room Lights
+  entity_id: switch.laundry_room

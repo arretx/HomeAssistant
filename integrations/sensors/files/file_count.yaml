@@ -1,14 +1,14 @@
 - platform: folder
-  folder: /config/www/sounds/coffee
+  folder: /config/www/sounds/coffee_maker
 
 - platform: folder
   folder: /config/www/images/icons
 
 - platform: folder
-  folder: /config/www/sounds/coffee/halloween
+  folder: /config/www/sounds/coffee_maker/halloween
 
 - platform: folder
-  folder: /config/www/sounds/coffee/christmas
+  folder: /config/www/sounds/coffee_maker/christmas
 
 - platform: folder
   folder: /config/www/sounds/holidays/newyearseve

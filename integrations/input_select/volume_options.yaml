@@ -26,3 +26,19 @@ global_audio_mode:
   options:
     - "Mute All"
     - "Normal"
+
+theme_mode:
+  name: Theme Selection Override
+  options:
+    - "Normal Mode"
+    - "Holiday Mode"
+    - "Birthday Mode"
+
+theme_holiday:
+  options:
+    - "Thanksgiving"
+    - "Christmas"
+    - "Memorial Day"
+    - "Easter"
+    - "Independence Day"
+    - "Valentine's Day"

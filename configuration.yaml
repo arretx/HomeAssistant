@@ -12,6 +12,7 @@ homeassistant:
         - 192.168.1.132
       allow_bypass_login: false
     - type: homeassistant
+  customize: !include customize.yaml
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
 #   base_url: example.duckdns.org:8123

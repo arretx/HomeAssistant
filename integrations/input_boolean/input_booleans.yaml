@@ -16,3 +16,9 @@ coffee_timer:
 kitty_litter:
   name: Kitty Litter
   icon: mdi:cat
+
+test_switch:
+  name: Test Switch
+
+baby_sleeping:
+  name: Baby Sleeping
