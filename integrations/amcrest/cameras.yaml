@@ -1,0 +1,13 @@
+- host: 192.168.1.221
+  username: !secret amcrest_user
+  password: !secret amcrest_password
+  name: Amcrest Patio
+  stream_source: rtsp
+  resolution: high
+
+- host: 192.168.1.178
+  username: !secret amcrest_user
+  password: !secret amcrest_password
+  name: Amcrest PTZ
+  stream_source: rtsp
+  resolution: high

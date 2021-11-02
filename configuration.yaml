@@ -41,6 +41,7 @@ api:
 #  base_url: https://hassio.jongriffith.com:8123
 #  service_name: google_translate_say
 
+amcrest: !include_dir_merge_list integrations/amcrest/
 automation: !include automations.yaml
 binary_sensor: !include_dir_merge_list integrations/binary_sensors/
 camera: !include_dir_merge_list integrations/camera/
@@ -88,6 +89,7 @@ zone: !include_dir_merge_list zones/ # Zones
 zoneminder: !include_dir_merge_list integrations/zoneminder/
 #zwave: !include_dir_merge_named zwave/ # Zwave Config flig
 
+ffmpeg:
 stream:
 discovery:
 sun:
