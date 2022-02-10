@@ -1,0 +1,33 @@
+kitchen:
+  name: Kitchen
+  entities:
+    - light.kitchen
+    - fan.kitchen
+    - switch.coffee_maker
+living_room:
+  name: Living Room
+  entities:
+    - switch.reading_lamp
+    - light.living_room
+    - light.living_room_fan_light
+    - light.entertainment_center
+lights:
+  name: Lights
+  entities:
+    - light.living_room
+    - light.living_room_fan_light
+    - light.kitchen
+    - light.dining_room
+    - light.hallway
+    - light.laundry_room_lights
+    - light.master_bathroom
+    - light.master_bedroom
+    - light.patio_lights
+    - light.entertainment_center
+    - light.walk_in_closet
+    - light.workshop
+people:
+  name: Occupants
+  entities:
+    - person.jon_griffith
+    - person.melanie_griffith

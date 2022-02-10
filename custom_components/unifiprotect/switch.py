@@ -1,225 +1,251 @@
-"""This component provides Switches for Unifi Protect."""
+"""This component provides Switches for UniFi Protect."""
+from __future__ import annotations
 
+from dataclasses import dataclass
 import logging
+from typing import Any, Callable, Sequence
 
-from homeassistant.components.switch import SwitchEntity
+from homeassistant.components.switch import SwitchEntity, SwitchEntityDescription
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import ATTR_ATTRIBUTION
+from homeassistant.const import ENTITY_CATEGORY_CONFIG
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity import Entity
+from pyunifiprotect.data import Camera, RecordingMode, VideoMode
+from pyunifiprotect.data.base import ProtectAdoptableDeviceModel
 
-from .const import (
-    ATTR_DEVICE_MODEL,
-    CONF_IR_OFF,
-    CONF_IR_ON,
-    DEFAULT_ATTRIBUTION,
-    DOMAIN,
-    TYPE_HIGH_FPS_ON,
-    TYPE_RECORD_ALWAYS,
-    TYPE_RECORD_MOTION,
-    TYPE_RECORD_NEVER,
-    TYPE_RECORD_OFF,
-    TYPE_RECORD_SMARTDETECT,
-)
-from .entity import UnifiProtectEntity
+from .const import DOMAIN
+from .data import ProtectData
+from .entity import ProtectDeviceEntity, async_all_device_entities
+from .models import ProtectRequiredKeysMixin
+from .utils import get_nested_attr
 
 _LOGGER = logging.getLogger(__name__)
 
-_SWITCH_NAME = 0
-_SWITCH_ICON = 1
-_SWITCH_TYPE = 2
-_SWITCH_REQUIRES = 3
 
-SWITCH_TYPES = {
-    "record_motion": [
-        "Record Motion",
-        "video-outline",
-        "record_motion",
-        "recording_mode",
-    ],
-    "record_always": ["Record Always", "video", "record_always", "recording_mode"],
-    "record_smart": ["Record Smart", "video", "record_smart", "has_smartdetect"],
-    "ir_mode": ["IR Active", "brightness-4", "ir_mode", "ir_mode"],
-    "status_light": ["Status Light On", "led-on", "status_light", "has_ledstatus"],
-    "hdr_mode": ["HDR Mode", "brightness-7", "hdr_mode", "has_hdr"],
-    "high_fps": ["High FPS", "video-high-definition", "high_fps", "has_highfps"],
-    "light_motion": [
-        "Light when Motion",
-        "motion-sensor",
-        "light_motion",
-        "motion_mode",
-    ],
-    "light_dark": ["Light when Dark", "motion-sensor", "light_dark", "motion_mode"],
-}
+@dataclass
+class ProtectSwitchEntityDescription(ProtectRequiredKeysMixin, SwitchEntityDescription):
+    """Describes UniFi Protect Switch entity."""
+
+    ufp_set_function: str | None = None
+
+
+_KEY_STATUS_LIGHT = "status_light"
+_KEY_HDR_MODE = "hdr_mode"
+_KEY_HIGH_FPS = "high_fps"
+_KEY_PRIVACY_MODE = "privacy_mode"
+_KEY_SYSTEM_SOUNDS = "system_sounds"
+_KEY_OSD_NAME = "osd_name"
+_KEY_OSD_DATE = "osd_date"
+_KEY_OSD_LOGO = "osd_logo"
+_KEY_OSD_BITRATE = "osd_bitrate"
+_KEY_SMART_PERSON = "smart_person"
+_KEY_SMART_VEHICLE = "smart_vehicle"
+_KEY_SSH = "ssh"
+
+ALL_DEVICES_SWITCHES: tuple[ProtectSwitchEntityDescription, ...] = (
+    ProtectSwitchEntityDescription(
+        key=_KEY_SSH,
+        name="SSH Enabled",
+        icon="mdi:lock",
+        entity_registry_enabled_default=False,
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_value="is_ssh_enabled",
+        ufp_set_function="set_ssh",
+    ),
+)
+
+CAMERA_SWITCHES: tuple[ProtectSwitchEntityDescription, ...] = (
+    ProtectSwitchEntityDescription(
+        key=_KEY_STATUS_LIGHT,
+        name="Status Light On",
+        icon="mdi:led-on",
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_required_field="feature_flags.has_led_status",
+        ufp_value="led_settings.is_enabled",
+        ufp_set_function="set_status_light",
+    ),
+    ProtectSwitchEntityDescription(
+        key=_KEY_HDR_MODE,
+        name="HDR Mode",
+        icon="mdi:brightness-7",
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_required_field="feature_flags.has_hdr",
+        ufp_value="hdr_mode",
+        ufp_set_function="set_hdr",
+    ),
+    ProtectSwitchEntityDescription(
+        key=_KEY_HIGH_FPS,
+        name="High FPS",
+        icon="mdi:video-high-definition",
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_required_field="feature_flags.has_highfps",
+        ufp_value="video_mode",
+    ),
+    ProtectSwitchEntityDescription(
+        key=_KEY_PRIVACY_MODE,
+        name="Privacy Mode",
+        icon="mdi:eye-settings",
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_required_field="feature_flags.has_privacy_mask",
+        ufp_value="is_privacy_on",
+    ),
+    ProtectSwitchEntityDescription(
+        key=_KEY_SYSTEM_SOUNDS,
+        name="System Sounds",
+        icon="mdi:speaker",
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_required_field="feature_flags.has_speaker",
+        ufp_value="speaker_settings.are_system_sounds_enabled",
+        ufp_set_function="set_system_sounds",
+    ),
+    ProtectSwitchEntityDescription(
+        key=_KEY_OSD_NAME,
+        name="Overlay: Show Name",
+        icon="mdi:fullscreen",
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_value="osd_settings.is_name_enabled",
+        ufp_set_function="set_osd_name",
+    ),
+    ProtectSwitchEntityDescription(
+        key=_KEY_OSD_DATE,
+        name="Overlay: Show Date",
+        icon="mdi:fullscreen",
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_value="osd_settings.is_date_enabled",
+        ufp_set_function="set_osd_date",
+    ),
+    ProtectSwitchEntityDescription(
+        key=_KEY_OSD_LOGO,
+        name="Overlay: Show Logo",
+        icon="mdi:fullscreen",
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_value="osd_settings.is_logo_enabled",
+        ufp_set_function="set_osd_logo",
+    ),
+    ProtectSwitchEntityDescription(
+        key=_KEY_OSD_BITRATE,
+        name="Overlay: Show Bitrate",
+        icon="mdi:fullscreen",
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_value="osd_settings.is_debug_enabled",
+        ufp_set_function="set_osd_bitrate",
+    ),
+    ProtectSwitchEntityDescription(
+        key=_KEY_SMART_PERSON,
+        name="Detections: Person",
+        icon="mdi:walk",
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_required_field="feature_flags.has_smart_detect",
+        ufp_value="is_person_detection_on",
+        ufp_set_function="set_person_detection",
+    ),
+    ProtectSwitchEntityDescription(
+        key=_KEY_SMART_VEHICLE,
+        name="Detections: Vehicle",
+        icon="mdi:car",
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_required_field="feature_flags.has_smart_detect",
+        ufp_value="is_vehicle_detection_on",
+        ufp_set_function="set_vehicle_detection",
+    ),
+)
+
+
+LIGHT_SWITCHES: tuple[ProtectSwitchEntityDescription, ...] = (
+    ProtectSwitchEntityDescription(
+        key=_KEY_STATUS_LIGHT,
+        name="Status Light On",
+        icon="mdi:led-on",
+        entity_category=ENTITY_CATEGORY_CONFIG,
+        ufp_value="light_device_settings.is_indicator_enabled",
+    ),
+)
 
 
 async def async_setup_entry(
-    hass: HomeAssistant, entry: ConfigEntry, async_add_entities
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: Callable[[Sequence[Entity]], None],
 ) -> None:
-    """Set up switches for UniFi Protect integration."""
-    entry_data = hass.data[DOMAIN][entry.entry_id]
-    upv_object = entry_data["upv"]
-    protect_data = entry_data["protect_data"]
-    server_info = entry_data["server_info"]
-
-    if not protect_data.data:
-        return
-
-    ir_on = entry.data[CONF_IR_ON]
-    if ir_on == "always_on":
-        ir_on = "on"
-
-    ir_off = entry.data[CONF_IR_OFF]
-    if ir_off == "led_off":
-        ir_off = "autoFilterOnly"
-    elif ir_off == "always_off":
-        ir_off = "off"
-
-    switches = []
-    for switch, switch_type in SWITCH_TYPES.items():
-        required_field = switch_type[_SWITCH_REQUIRES]
-
-        for device_id in protect_data.data:
-            # Only Add Switches if Device supports it.
-            if required_field and not protect_data.data[device_id].get(required_field):
-                continue
-
-            switches.append(
-                UnifiProtectSwitch(
-                    upv_object,
-                    protect_data,
-                    server_info,
-                    device_id,
-                    switch,
-                    ir_on,
-                    ir_off,
-                )
-            )
-            _LOGGER.debug("UNIFIPROTECT SWITCH CREATED: %s", switch)
-
-    async_add_entities(switches)
+    """Set up sensors for UniFi Protect integration."""
+    data: ProtectData = hass.data[DOMAIN][entry.entry_id]
+    entities: list[ProtectDeviceEntity] = async_all_device_entities(
+        data,
+        ProtectSwitch,
+        all_descs=ALL_DEVICES_SWITCHES,
+        camera_descs=CAMERA_SWITCHES,
+        light_descs=LIGHT_SWITCHES,
+    )
+    async_add_entities(entities)
 
 
-class UnifiProtectSwitch(UnifiProtectEntity, SwitchEntity):
-    """A Unifi Protect Switch."""
+class ProtectSwitch(ProtectDeviceEntity, SwitchEntity):
+    """A UniFi Protect Switch."""
 
     def __init__(
-        self, upv_object, protect_data, server_info, device_id, switch, ir_on, ir_off
+        self,
+        data: ProtectData,
+        device: ProtectAdoptableDeviceModel,
+        description: ProtectSwitchEntityDescription,
     ):
-        """Initialize an Unifi Protect Switch."""
-        super().__init__(upv_object, protect_data, server_info, device_id, switch)
-        self.upv = upv_object
-        switch_type = SWITCH_TYPES[switch]
-        self._name = f"{switch_type[_SWITCH_NAME]} {self._device_data['name']}"
-        self._icon = f"mdi:{switch_type[_SWITCH_ICON]}"
-        self._ir_on_cmd = ir_on
-        self._ir_off_cmd = ir_off
-        self._switch_type = switch_type[_SWITCH_TYPE]
+        """Initialize an UniFi Protect Switch."""
+        self.entity_description: ProtectSwitchEntityDescription = description
+        super().__init__(data, device)
+        self._attr_name = f"{self.device.name} {self.entity_description.name}"
+        self._switch_type = self.entity_description.key
+
+        if not isinstance(self.device, Camera):
+            return
+
+        if self.device.is_privacy_on:
+            self._previous_mic_level = 100
+            self._previous_record_mode = RecordingMode.ALWAYS
+        else:
+            self._previous_mic_level = self.device.mic_volume
+            self._previous_record_mode = self.device.recording_settings.mode
 
     @property
-    def name(self):
-        """Return the name of the device if any."""
-        return self._name
-
-    @property
-    def is_on(self):
+    def is_on(self) -> bool:
         """Return true if device is on."""
-        if self._switch_type == "record_motion":
-            return self._device_data["recording_mode"] == TYPE_RECORD_MOTION
-        if self._switch_type == "record_always":
-            return self._device_data["recording_mode"] == TYPE_RECORD_ALWAYS
-        if self._switch_type == "record_smart":
-            return self._device_data["recording_mode"] == TYPE_RECORD_SMARTDETECT
-        if self._switch_type == "ir_mode":
-            return self._device_data["ir_mode"] == self._ir_on_cmd
-        if self._switch_type == "hdr_mode":
-            return self._device_data["hdr_mode"] is True
-        if self._switch_type == "high_fps":
-            return self._device_data["video_mode"] == TYPE_HIGH_FPS_ON
-        if self._switch_type == "light_motion":
-            return self._device_data["motion_mode"] == TYPE_RECORD_MOTION
-        if self._switch_type == "light_dark":
-            return self._device_data["motion_mode"] == TYPE_RECORD_ALWAYS
-        return (
-            self._device_data["status_light"] is True
-            if "status_light" in self._device_data
-            else True
-        )
+        if self.entity_description.ufp_value is None:
+            return False
 
-    @property
-    def icon(self):
-        """Icon to use in the frontend, if any."""
-        return self._icon
+        ufp_value = get_nested_attr(self.device, self.entity_description.ufp_value)
+        if self._switch_type == _KEY_HIGH_FPS:
+            return bool(ufp_value == VideoMode.HIGH_FPS)
+        return ufp_value is True
 
-    @property
-    def device_state_attributes(self):
-        """Return the device state attributes."""
-        return {
-            ATTR_ATTRIBUTION: DEFAULT_ATTRIBUTION,
-            ATTR_DEVICE_MODEL: self._model,
-        }
-
-    async def async_turn_on(self, **kwargs):
+    async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the device on."""
-        if self._switch_type == "record_motion":
-            _LOGGER.debug("Turning on Motion Detection for %s", self._name)
-            await self.upv.set_camera_recording(self._device_id, TYPE_RECORD_MOTION)
-        elif self._switch_type == "record_always":
-            _LOGGER.debug("Turning on Constant Recording")
-            await self.upv.set_camera_recording(self._device_id, TYPE_RECORD_ALWAYS)
-        elif self._switch_type == "record_smart":
-            _LOGGER.debug("Turning on SmartDetect Recording")
-            await self.upv.set_camera_recording(
-                self._device_id, TYPE_RECORD_SMARTDETECT
-            )
-        elif self._switch_type == "ir_mode":
-            _LOGGER.debug("Turning on IR")
-            await self.upv.set_camera_ir(self._device_id, self._ir_on_cmd)
-        elif self._switch_type == "hdr_mode":
-            _LOGGER.debug("Turning on HDR mode")
-            await self.upv.set_camera_hdr_mode(self._device_id, True)
-        elif self._switch_type == "high_fps":
-            _LOGGER.debug("Turning on High FPS mode")
-            await self.upv.set_camera_video_mode_highfps(self._device_id, True)
-        elif self._switch_type == "light_motion":
-            _LOGGER.debug("Turning on Light Motion detection")
-            await self.upv.light_settings(
-                self._device_id, TYPE_RECORD_MOTION, enable_at="fulltime"
-            )
-        elif self._switch_type == "light_dark":
-            _LOGGER.debug("Turning on Light Motion when Dark")
-            await self.upv.light_settings(
-                self._device_id, TYPE_RECORD_ALWAYS, enable_at="dark"
-            )
-        else:
-            _LOGGER.debug("Changing Status Light to On")
-            await self.upv.set_device_status_light(
-                self._device_id, True, self._device_type
-            )
-        await self.protect_data.async_refresh(force_camera_update=True)
 
-    async def async_turn_off(self, **kwargs):
+        if self.entity_description.ufp_set_function is not None:
+            await getattr(self.device, self.entity_description.ufp_set_function)(True)
+            return
+
+        assert isinstance(self.device, Camera)
+        if self._switch_type == _KEY_HIGH_FPS:
+            _LOGGER.debug("Turning on High FPS mode")
+            await self.device.set_video_mode(VideoMode.HIGH_FPS)
+            return
+        if self._switch_type == _KEY_PRIVACY_MODE:
+            _LOGGER.debug("Turning Privacy Mode on for %s", self.device.name)
+            self._previous_mic_level = self.device.mic_volume
+            self._previous_record_mode = self.device.recording_settings.mode
+            await self.device.set_privacy(True, 0, RecordingMode.NEVER)
+
+    async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the device off."""
-        if self._switch_type == "ir_mode":
-            _LOGGER.debug("Turning off IR")
-            await self.upv.set_camera_ir(self._device_id, self._ir_off_cmd)
-        elif self._switch_type == "status_light":
-            _LOGGER.debug("Changing Status Light to Off")
-            await self.upv.set_device_status_light(
-                self._device_id, False, self._device_type
-            )
-        elif self._switch_type == "hdr_mode":
-            _LOGGER.debug("Turning off HDR mode")
-            await self.upv.set_camera_hdr_mode(self._device_id, False)
-        elif self._switch_type == "high_fps":
+
+        if self.entity_description.ufp_set_function is not None:
+            await getattr(self.device, self.entity_description.ufp_set_function)(False)
+            return
+
+        assert isinstance(self.device, Camera)
+        if self._switch_type == _KEY_HIGH_FPS:
             _LOGGER.debug("Turning off High FPS mode")
-            await self.upv.set_camera_video_mode_highfps(self._device_id, False)
-        elif self._switch_type == "light_motion":
-            _LOGGER.debug("Turning off Light Motion detection")
-            await self.upv.light_settings(self._device_id, TYPE_RECORD_OFF)
-        elif self._switch_type == "light_dark":
-            _LOGGER.debug("Turning off Light Motion when Dark")
-            await self.upv.light_settings(self._device_id, TYPE_RECORD_OFF)
-        else:
-            _LOGGER.debug("Turning off Recording")
-            await self.upv.set_camera_recording(self._device_id, TYPE_RECORD_NEVER)
-        await self.protect_data.async_refresh(force_camera_update=True)
+            await self.device.set_video_mode(VideoMode.DEFAULT)
+        elif self._switch_type == _KEY_PRIVACY_MODE:
+            _LOGGER.debug("Turning Privacy Mode off for %s", self.device.name)
+            await self.device.set_privacy(
+                False, self._previous_mic_level, self._previous_record_mode
+            )

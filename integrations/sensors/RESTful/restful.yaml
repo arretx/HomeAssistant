@@ -20,3 +20,18 @@
 #  sensors:
 #    task_id:
 #      value_template: '{{states.sensor.tasks.attributes["todo-items"]["id"]}}'
+- platform: rest
+  resource: !secret clickup_tasks_url
+  name: tasks
+  username: !secret clickup_user
+  password: !secret clickup_password
+  headers:
+    Authorization: !secret clickup_token
+    Content-Type: application/json
+  json_attributes:
+    - tasks
+
+- platform: template
+  sensors:
+    task_name:
+      value_template: '{{ states.sensor.clickuptasks.attributes["tasks"][0]["name"] }}'

@@ -10,6 +10,8 @@ homeassistant:
         - 192.168.1.45
         - 192.168.1.35
         - 192.168.1.132
+        - 192.168.1.191
+        - 192.168.1.97
       allow_bypass_login: false
     - type: homeassistant
   customize: !include customize.yaml
@@ -48,6 +50,7 @@ camera: !include_dir_merge_list integrations/camera/
 counter: !include_dir_merge_named integrations/counters/
 device_tracker: !include_dir_merge_list integrations/device_tracker/
 google: !include_dir_merge_named integrations/google/
+group: !include_dir_merge_list integrations/group/
 history:
   exclude:
     domains:
