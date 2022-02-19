@@ -98,7 +98,7 @@ discovery:
 sun:
 cloud:
 wemo:
-  discovery: false
-  static:
-    - 192.168.1.60 # Patio Lights
-    - 192.168.1.61 # Entertainment Center
+  discovery: true
+  #static:
+  #  - 192.168.1.60 # Patio Lights
+  #  - 192.168.1.61 # Entertainment Center
