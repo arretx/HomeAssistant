@@ -1,14 +1,22 @@
 db_url: !secret mysql_db_url
-auto_purge: false
-purge_keep_days: 180
-#include:
-#  domains:
+auto_purge: true
+purge_keep_days: 90
+auto_repack: true
+include:
+  domains:
 #    - person
 #    - camera
 #    - vacuum
 #    - switch
 #    - fan
-#    - light
+    - light
+    - person
+    - switch
+    - fan
+    - vacuum
+    - button
+    - number
+    - automation
 #    - alarm_control_panel
 #    - automation
 #    - binary_sensor
@@ -16,7 +24,23 @@ purge_keep_days: 180
 #    - input_number
 #    - media_player
 #    - sensor
-#  entities:
+  entities:
+    - sensor.dakboard
+    - sensor.drop_1986145792
+    - sensor.us24p250
+    - sensor.usfxg
+    - sensor.udmpro
+    - sensor.us860w
+    - binary_sensor.3d_timelapse_switch
+    - sensor.multisensor_2_temperature
+    - binary_sensor.multisensor_2_motion
+    - sensor.multisensor_2_humidity
+    - sensor.guest_bathroom_temperature
+    - sensor.guest_bathroom_humidity
+    - sensor.multisensor_1_temperature
+    - sensor.multisensor_1_humidity
+    - sensor.master_bedroom_temperature
+    - sensor.master_bedroom_humidity
 #    - sensor.ender3_switch
 #    - sensor.coffee_maker_status
 #    - sensor.desklamp1_status
@@ -30,20 +54,20 @@ purge_keep_days: 180
 #    - sensor.guest_bathroom_humidity
 #    - binary_sensor.guest_bathroom_motion_1
 #    - binary_sensor.guest_bathroom_motion_2
-exclude:
-  entity_globs:
-    - sensor.dark_sky*
-    - sensor.date*
-    - sensor.geocoded*
-    - sensor.hallow*
-    - sensor.icon*
-    - sensor.ns1_3d*
-    - sensor.internet_t*
-    - sensor.time*
-    - sensor.memory*
-    - sensor.*_brightness*
-    - sensor.disk*
-    - sensor.adguard*
-    - sensor.*_uptime
-    - sensor.*rx
-    - sensor.*tx
+#exclude:
+#  entity_globs:
+#    - sensor.dark_sky*
+#    - sensor.date*
+#    - sensor.geocoded*
+#    - sensor.hallow*
+#    - sensor.icon*
+#    - sensor.ns1_3d*
+#    - sensor.internet_t*
+#    - sensor.time*
+#    - sensor.memory*
+#    - sensor.*_brightness*
+#    - sensor.disk*
+#    - sensor.adguard*
+#    - sensor.*_uptime
+#    - sensor.*rx
+#    - sensor.*tx

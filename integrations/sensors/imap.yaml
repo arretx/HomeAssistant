@@ -1,21 +1,21 @@
-- platform: imap_email_content
-  server: imap.gmail.com
-  name: imap_content
-  port: 993
-  username: !secret imap_username
-  password: !secret imap_password
-  senders:
-    - no-reply@costco.com
-    - noreply@community.home-assistant.io
-  value_template: >-
-    {% if 'Costco Membership Payment Confirmation' in subject %}
-      Costo Membership Renewed
-    {% elif 'noreply@community.home-assistant.io' in from %}
-      HA Forum Reply
-    {% endif %}
+#- platform: imap_email_content
+#  server: imap.gmail.com
+#  name: imap_content
+#  port: 993
+#  username: !secret imap_username
+#  password: !secret imap_password
+#  senders:
+#    - no-reply@costco.com
+#    - noreply@community.home-assistant.io
+#  value_template: >-
+#    {% if 'Costco Membership Payment Confirmation' in subject %}
+#      Costo Membership Renewed
+#    {% elif 'noreply@community.home-assistant.io' in from %}
+#      HA Forum Reply
+#    {% endif %}
 
-- platform: imap
-  server: imap.gmail.com
-  username: !secret imap_username
-  password: !secret imap_count_pwd
-  name: gmail_count
+#- platform: imap
+#  server: imap.gmail.com
+#  username: !secret imap_username
+#  password: !secret imap_count_pwd
+#  name: gmail_count

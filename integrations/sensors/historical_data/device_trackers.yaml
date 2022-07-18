@@ -1,0 +1,24 @@
+- platform: template
+  sensors:
+    us860w:
+      value_template: '{% if is_state("device_tracker.us8p60", "home") %}Online{% else %}Offline{% endif %}'
+- platform: template
+  sensors:
+    us24p250:
+      value_template: '{% if is_state("device_tracker.us24p250", "home") %}Online{% else %}Offline{% endif %}'
+- platform: template
+  sensors:
+    usfxg:
+      value_template: '{% if is_state("device_tracker.usfxg", "home") %}Online{% else %}Offline{% endif %}'
+- platform: template
+  sensors:
+    dakboard:
+      value_template: '{% if is_state("device_tracker.dakboard", "home") %}Online{% else %}Offline{% endif %}'
+- platform: template
+  sensors:
+    drop:
+      value_template: '{% if is_state("device_tracker.drop_1986145792", "home") %}Online{% else %}Offline{% endif %}'
+- platform: template
+  sensors:
+    udmpro:
+      value_template: '{% if is_state("device_tracker.udmpro", "home") %}Online{% else %}Offline{% endif %}'

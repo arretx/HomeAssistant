@@ -39,9 +39,9 @@
     pdf_inbox:
       friendly_name: Inbox Count
       value_template: "{{ states.sensor.pdf.attributes.number_of_files }}"
-    coffee_commercials:
-      friendly_name: Number of Coffee Commercials
-      value_template: "{{ states.sensor.coffee.attributes.number_of_files }}"
+    #coffee_commercials:
+    #  friendly_name: Number of Coffee Commercials
+    #  value_template: "{{ states.sensor.coffee.attributes.number_of_files }}"
     sensor_icons:
       friendly_name: Number of Sensor Icons
       value_template: "{{ states.sensor.icons.attributes.number_of_files }}"
@@ -58,9 +58,9 @@
     pepito_sounds:
       friendly_name: Number of Pepito Sounds
       value_template: "{{ states.sensor.pepito.attributes.number_of_files }}"
-    images_camera_2:
-      friendly_name: Total Camera 2 Images
-      value_template: "{{ states.sensor.camera2.number_of_files }}"
+    #images_camera_2:
+    #  friendly_name: Total Camera 2 Images
+    #  value_template: "{{ states.sensor.camera2.number_of_files }}"
     images_all_cameras:
       friendly_name: Total Camera Images
       value_template: "{{ states.sensor.cameras.number_of_files }}"

@@ -35,3 +35,66 @@
       brightness: 255
     entity_id: light.workshop
   mode: single
+- id: '1653022300827'
+  alias: Master Bathroom Lights
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.master_bath_motion
+      light_target:
+        entity_id:
+        - light.mastershower
+        - light.mastershower_master
+        - light.mastershower_segment_1
+        - light.mastershower_segment_2
+        - light.mastershower_segment_3
+        - light.master_bathroom
+      no_motion_wait: 300
+- id: '1653023563682'
+  alias: Master Bathroom Lighting
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.master_bath_motion
+    to: 'on'
+    from: 'off'
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.mastershower_master
+  - service: select.select_option
+    data:
+      option: Succulent Candles
+    target:
+      entity_id: select.mastershower_preset
+  - service: light.turn_on
+    data:
+      brightness_pct: 40
+    target:
+      entity_id: light.master_bathroom
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.master_bath_exhaust_fan
+  - delay:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: fdf8d08c26c597b9e76c9c0db4aa6191
+    entity_id: light.mastershower_master
+    domain: light
+  - type: turn_off
+    device_id: 301521acdfd4e01406af351fe8a02e16
+    entity_id: light.master_bathroom
+    domain: light
+  - type: turn_off
+    device_id: 17e3902e72edb3aca316eaeea9740928
+    entity_id: switch.master_bath_exhaust_fan
+    domain: switch
+  mode: single

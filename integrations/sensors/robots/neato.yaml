@@ -4,7 +4,6 @@
       friendly_name: Pepito's Battery
       value_template: "{{ states.vacuum.pepito.attributes.battery_level }}"
       icon_template: >
-        {% set battery_level = states.vacuum.pepito.attributes.battery_level|default(0)|int %}
         {% set battery_round = (battery_level / 10) |int * 10 %}
         {% if battery_round >= 100 %}
           mdi:battery
