@@ -1,0 +1,6 @@
+urls:
+  - https://jongriffith.com/legacy/news-updates/feed/
+  - https://jongriffith.com/renovations/feed/
+scan_interval:
+  seconds: 30
+max_entries: 5

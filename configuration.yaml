@@ -18,6 +18,7 @@ homeassistant:
 frontend:
   extra_module_url:
     - /local/community/lovelace-card-mod/card-mod.js
+  themes: !include_dir_merge_named themes/
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
 #   base_url: example.duckdns.org:8123
@@ -34,8 +35,10 @@ api:
 automation: !include automations.yaml
 binary_sensor: !include_dir_merge_list integrations/binary_sensors/
 camera: !include_dir_merge_list integrations/camera/
+calendar: !include_dir_merge_named integrations/calendar/
 counter: !include_dir_merge_named integrations/counters/
 device_tracker: !include_dir_merge_list integrations/device_tracker/
+feedreader: !include_dir_merge_named integrations/feedreader/
 # google: !include_dir_merge_named integrations/google/
 group: !include_dir_merge_list integrations/group/
 history:
@@ -46,7 +49,7 @@ history:
       - calendar
       - camera
       - device_tracker
-#influxdb: !include_dir_merge_named integrations/influxdb/
+influxdb: !include_dir_merge_named integrations/influxdb/
 input_boolean: !include_dir_merge_named integrations/input_boolean/
 input_datetime: !include_dir_merge_named integrations/input_datetime/
 input_number: !include_dir_merge_named integrations/input_number/
@@ -66,12 +69,14 @@ notify: !include_dir_merge_list integrations/notify/
 #octoprint: !include_dir_merge_named integrations/octoprint/
 proximity: !include_dir_merge_named integrations/proximity/
 recorder: !include_dir_merge_named integrations/recorder/
+rest_command: !include_dir_merge_named integrations/rest_command/
 # spotify: !include_dir_merge_named integrations/spotify/
 sensor: !include_dir_merge_list integrations/sensors/
 #folder_watcher: !include_dir_merge_list integrations/folder_watcher/
 scene: !include scenes.yaml
 script: !include scripts.yaml
 template: !include_dir_merge_list integrations/template/
+tts: !include_dir_merge_list integrations/tts/
 # twilio: !include_dir_merge_named integrations/twilio/
 # samsungtv: !include_dir_merge_list integrations/samsungtv/
 # wake_on_lan:

@@ -13,12 +13,15 @@ party_mode:
 coffee_timer:
   name: Coffee Timer
 
-kitty_litter:
-  name: Kitty Litter
-  icon: mdi:cat
+master_work_light_mode:
+  name: Master Work Light Mode
+  icon: mdi:account-hard-hat
 
-test_switch:
-  name: Test Switch
+taco_a:
+  name: Taco A
 
-baby_sleeping:
-  name: Baby Sleeping
+taco_b:
+  name: Taco B
+
+taco_c:
+  name: Taco C

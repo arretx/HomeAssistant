@@ -4,11 +4,11 @@ purge_keep_days: 90
 auto_repack: true
 include:
   domains:
-#    - person
-#    - camera
-#    - vacuum
-#    - switch
-#    - fan
+    #    - person
+    #    - camera
+    #    - vacuum
+    #    - switch
+    #    - fan
     - light
     - person
     - switch
@@ -17,13 +17,13 @@ include:
     - button
     - number
     - automation
-#    - alarm_control_panel
-#    - automation
-#    - binary_sensor
-#    - camera
-#    - input_number
-#    - media_player
-#    - sensor
+  #    - alarm_control_panel
+  #    - automation
+  #    - binary_sensor
+  #    - camera
+  #    - input_number
+  #    - media_player
+  #    - sensor
   entities:
     - sensor.dakboard
     - sensor.drop_1986145792
@@ -41,6 +41,13 @@ include:
     - sensor.multisensor_1_humidity
     - sensor.master_bedroom_temperature
     - sensor.master_bedroom_humidity
+  entity_globs:
+    - fan.*
+    - light.*
+    - switch.*
+    - binary_sensor.g3*motion
+    - binary_sensor.*_motion
+    - sensor.u_by_moen*
 #    - sensor.ender3_switch
 #    - sensor.coffee_maker_status
 #    - sensor.desklamp1_status

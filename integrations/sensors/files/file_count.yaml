@@ -64,3 +64,9 @@
     images_all_cameras:
       friendly_name: Total Camera Images
       value_template: "{{ states.sensor.cameras.number_of_files }}"
+    taco_percent:
+      friendly_name: Taco Percent
+      value_template: >
+        {% set boolean_list = states.input_boolean|selectattr('object_id', 'search', 'taco*')|list %}
+        {% set percent_on = (boolean_list|selectattr('state', 'equalto', 'on') | list | length ) / (boolean_list|count) %}
+        {{percent_on | float | round(2) * 100 }}

@@ -1,0 +1,5 @@
+todoist:
+  method: post
+  url: "https://api.todoist.com/sync/v9/{{ url }}"
+  payload: !secret todoist_api_payload
+  content_type: "application/x-www-form-urlencoded"

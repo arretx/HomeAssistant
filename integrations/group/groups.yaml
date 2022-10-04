@@ -31,3 +31,8 @@ people:
   entities:
     - person.jon_griffith
     - person.melanie_griffith
+household_ios:
+  name: Jon & Melanie iOS
+  services:
+    - service: notify.mobile_app_jon
+    - service: notify.mobile_app_melanie

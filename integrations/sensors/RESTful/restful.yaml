@@ -20,3 +20,42 @@
 #  sensors:
 #    task_id:
 #      value_template: '{{states.sensor.tasks.attributes["todo-items"]["id"]}}'
+
+- platform: rest
+  name: Inbox
+  method: GET
+  resource: "https://api.todoist.com/sync/v9/projects/get_data"
+  params:
+    token: !secret todoist_api_token
+    project_id: 1251368857
+  value_template: "{{ value_json['project']['id'] }}"
+  json_attributes:
+    - project
+    - items
+  scan_interval: 30
+
+- platform: rest
+  name: Household Tasks
+  method: GET
+  resource: "https://api.todoist.com/sync/v9/projects/get_data"
+  params:
+    token: !secret todoist_api_token
+    project_id: 2297623587
+  value_template: "{{ value_json['project']['id'] }}"
+  json_attributes:
+    - project
+    - items
+  scan_interval: 30
+
+- platform: rest
+  name: Renovation Tasks
+  method: GET
+  resource: "https://api.todoist.com/sync/v9/projects/get_data"
+  params:
+    token: !secret todoist_api_token
+    project_id: 2297987063
+  value_template: "{{ value_json['project']['id'] }}"
+  json_attributes:
+    - project
+    - items
+  scan_interval: 30

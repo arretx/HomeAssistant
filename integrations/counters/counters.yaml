@@ -1,0 +1,3 @@
+garbage_disposal:
+  name: Garbage Disposal Switch Count
+  restore: true

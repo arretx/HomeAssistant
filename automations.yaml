@@ -1,17 +1,3 @@
-- id: '1591419330636'
-  alias: New Automation
-  description: Turn off Candle Warmer 1 at 23:59
-  trigger:
-  - at: '23:59'
-    platform: time
-  condition:
-  - after: '23:59'
-    before: 00:01
-    condition: time
-  action:
-  - data: {}
-    entity_id: switch.sonoff_candle_warmer_1
-    service: switch.turn_off
 - id: '1601360255168'
   alias: Tag Jon's Tag is scanned
   description: ''
@@ -35,66 +21,85 @@
       brightness: 255
     entity_id: light.workshop
   mode: single
-- id: '1653022300827'
-  alias: Master Bathroom Lights
-  description: ''
-  use_blueprint:
-    path: homeassistant/motion_light.yaml
-    input:
-      motion_entity: binary_sensor.master_bath_motion
-      light_target:
-        entity_id:
-        - light.mastershower
-        - light.mastershower_master
-        - light.mastershower_segment_1
-        - light.mastershower_segment_2
-        - light.mastershower_segment_3
-        - light.master_bathroom
-      no_motion_wait: 300
-- id: '1653023563682'
-  alias: Master Bathroom Lighting
+- id: '1662012954121'
+  alias: Task Notification
   description: ''
   trigger:
   - platform: state
     entity_id:
-    - binary_sensor.master_bath_motion
-    to: 'on'
-    from: 'off'
+    - sensor.household
+    attribute: items
   condition: []
   action:
-  - service: light.turn_on
-    data: {}
-    target:
-      entity_id: light.mastershower_master
-  - service: select.select_option
+  - service: notify.mobile_app_jon
     data:
-      option: Succulent Candles
-    target:
-      entity_id: select.mastershower_preset
-  - service: light.turn_on
-    data:
-      brightness_pct: 40
-    target:
-      entity_id: light.master_bathroom
-  - service: switch.turn_on
-    data: {}
-    target:
-      entity_id: switch.master_bath_exhaust_fan
-  - delay:
+      message: '{% set value_json = state_attr(''sensor.household'',''items'') %}
+        {{value_json[0].content}}'
+  mode: single
+- id: '1662418108441'
+  alias: Picore Down Idle 10m
+  description: ''
+  trigger:
+  - platform: device
+    device_id: bb7ea7d77012fca207408d1ef41a2950
+    domain: media_player
+    entity_id: media_player.picoreplayer
+    type: idle
+    for:
       hours: 0
       minutes: 10
       seconds: 0
-      milliseconds: 0
-  - type: turn_off
-    device_id: fdf8d08c26c597b9e76c9c0db4aa6191
-    entity_id: light.mastershower_master
-    domain: light
-  - type: turn_off
-    device_id: 301521acdfd4e01406af351fe8a02e16
-    entity_id: light.master_bathroom
-    domain: light
-  - type: turn_off
-    device_id: 17e3902e72edb3aca316eaeea9740928
-    entity_id: switch.master_bath_exhaust_fan
-    domain: switch
+  condition: []
+  action:
+  - service: media_player.volume_set
+    data:
+      volume_level: 0
+    target:
+      device_id: bb7ea7d77012fca207408d1ef41a2950
+  mode: single
+- id: '1662694234524'
+  alias: Music in the Shower
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - climate.u_by_moen_012547
+    from: 'off'
+  condition: []
+  action:
+  - service: media_player.turn_on
+    data: {}
+    target:
+      entity_id: media_player.mass_picoreplayer
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.7
+    target:
+      entity_id:
+      - media_player.mass_picoreplayer
+  - service: media_player.select_source
+    data:
+      source: http://192.168.1.101:8095/74648f7c9b7b49f1897d39f0899e454c.flac
+    target:
+      entity_id:
+      - media_player.mass_picoreplayer
+  mode: single
+- id: '1662695081488'
+  alias: Shower Off, Music Off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - climate.u_by_moen_012547
+    to: 'off'
+  condition: []
+  action:
+  - service: media_player.media_stop
+    data: {}
+    target:
+      entity_id: media_player.mass_picoreplayer
+  - service: media_player.turn_off
+    data: {}
+    target:
+      entity_id: media_player.mass_picoreplayer
   mode: single

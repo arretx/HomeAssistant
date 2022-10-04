@@ -1,0 +1,6 @@
+platform: todoist
+token: !secret todoist_api
+custom_projects:
+  - name: "All Projects"
+  - name: "Due Today"
+    due_date_days: 0
