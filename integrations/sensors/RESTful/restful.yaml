@@ -1,26 +1,3 @@
-#- platform: rest
-#  resource: !secret teamwork_nv_tasks_url
-#  name: tasks
-#  authentication: basic
-#  username: !secret teamwork_nv_auth
-#  password: X
-#  json_attributes:
-#    - todo-items
-#  value_template: 'OK'
-#- platform: template
-#  sensors:
-#    todo_items:
-#      value_template: '{{ states.sensor.tasks.attributes["todo-items"][0]["content"] }}'
-
-# id = task number.
-# project-id = project
-# todo-list-id = task list
-
-#- platform: template
-#  sensors:
-#    task_id:
-#      value_template: '{{states.sensor.tasks.attributes["todo-items"]["id"]}}'
-
 - platform: rest
   name: Inbox
   method: GET
@@ -54,6 +31,32 @@
   params:
     token: !secret todoist_api_token
     project_id: 2297987063
+  value_template: "{{ value_json['project']['id'] }}"
+  json_attributes:
+    - project
+    - items
+  scan_interval: 30
+
+- platform: rest
+  name: Things To Do
+  method: GET
+  resource: "https://api.todoist.com/sync/v9/projects/get_data"
+  params:
+    token: !secret todoist_api_token
+    project_id: 2300217795
+  value_template: "{{ value_json['project']['id'] }}"
+  json_attributes:
+    - project
+    - items
+  scan_interval: 30
+
+- platform: rest
+  name: Brainstorming
+  method: GET
+  resource: "https://api.todoist.com/sync/v9/projects/get_data"
+  params:
+    token: !secret todoist_api_token
+    project_id: 2300218121
   value_template: "{{ value_json['project']['id'] }}"
   json_attributes:
     - project

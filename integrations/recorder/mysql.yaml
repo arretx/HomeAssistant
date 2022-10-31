@@ -17,6 +17,7 @@ include:
     - button
     - number
     - automation
+    - media_player
   #    - alarm_control_panel
   #    - automation
   #    - binary_sensor
@@ -47,7 +48,9 @@ include:
     - switch.*
     - binary_sensor.g3*motion
     - binary_sensor.*_motion
+    - binary_sensor.amcrest*
     - sensor.u_by_moen*
+    - counter.*
 #    - sensor.ender3_switch
 #    - sensor.coffee_maker_status
 #    - sensor.desklamp1_status

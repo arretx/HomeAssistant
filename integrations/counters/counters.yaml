@@ -1,3 +1,7 @@
 garbage_disposal:
   name: Garbage Disposal Switch Count
   restore: true
+
+halloween_sounds:
+  name: Front Patio Halloween Sounds
+  restore: true

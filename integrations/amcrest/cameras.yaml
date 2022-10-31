@@ -4,10 +4,16 @@
   name: Amcrest Patio
   stream_source: rtsp
   resolution: high
+  binary_sensors:
+    - motion_detected
+    - online
 
-- host: 192.168.1.178
+- host: 192.168.1.46
   username: !secret amcrest_user
   password: !secret amcrest_password
   name: Amcrest PTZ
   stream_source: rtsp
   resolution: high
+  binary_sensors:
+    - motion_detected
+    - online
