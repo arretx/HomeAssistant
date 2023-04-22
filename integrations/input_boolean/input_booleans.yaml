@@ -25,3 +25,7 @@ taco_b:
 
 taco_c:
   name: Taco C
+
+nap_time_baby:
+  name: Evelyn Napping
+  icon: mdi:baby-face

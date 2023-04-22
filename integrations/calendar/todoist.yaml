@@ -1,6 +1,10 @@
 platform: todoist
-token: !secret todoist_api
+token: !secret todoist_api_token
 custom_projects:
   - name: "All Projects"
   - name: "Due Today"
-    due_date_days: 0
+  - name: "Household High Priority"
+    labels:
+      - Test
+  - name: "Renovations"
+  - name: "Things to Do"

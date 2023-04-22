@@ -1,88 +1,23 @@
-- id: '1662695081488'
-  alias: Shower Off, Music Off
+- id: '1678596717654'
+  alias: Mount NAS Folder
   description: ''
   trigger:
-  - platform: state
-    entity_id:
-    - climate.u_by_moen_012547
-    to: 'off'
+  - platform: homeassistant
+    event: start
   condition: []
   action:
-  - service: media_player.media_stop
-    data: {}
-    target:
-      entity_id: media_player.mass_picoreplayer
-  - service: media_player.turn_off
-    data: {}
-    target:
-      entity_id: media_player.mass_picoreplayer
+  - service: shell_command.mount_nas_folder
   mode: single
-- id: '1665544615217'
-  alias: Shower On - WLED On
-  description: When the MOEN U shower is detected to move from the state of OFF, the
-    WLED master and LED light will be turned on.
-  trigger:
-  - platform: state
-    entity_id:
-    - climate.moen_master_shower_control
-    from: 'off'
-  condition: []
-  action:
-  - type: turn_on
-    device_id: ccc3558c4eabb621c2f8dae50cdfa7f4
-    entity_id: light.wled_master_shower_niche_master
-    domain: light
-  - type: turn_on
-    device_id: ccc3558c4eabb621c2f8dae50cdfa7f4
-    entity_id: light.wled_master_shower_niche
-    domain: light
-  - service: light.turn_on
-    data:
-      brightness_pct: 5
-    target:
-      entity_id: light.master_bathroom
-  mode: single
-- id: '1665554508216'
-  alias: Shower off, WLED Off
-  description: When the MOEN U shower is detected to move to the state of OFF, the
-    WLED master and LED light will be turned off.
-  trigger:
-  - platform: state
-    entity_id:
-    - climate.moen_master_shower_control
-    to: 'off'
-  condition: []
-  action:
-  - type: turn_off
-    device_id: ccc3558c4eabb621c2f8dae50cdfa7f4
-    entity_id: light.wled_master_shower_niche_master
-    domain: light
-  - type: turn_off
-    device_id: ccc3558c4eabb621c2f8dae50cdfa7f4
-    entity_id: light.wled_master_shower_niche
-    domain: light
-  mode: single
-- id: '1665614278399'
-  alias: Master Bath Motion Detection
+- id: '1679193576671'
+  alias: Restore Samba Backup Sensor
   description: ''
   trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.master_bath_motion
-    to: 'on'
+  - platform: homeassistant
+    event: start
   condition: []
   action:
-  - service: light.turn_on
+  - service: hassio.addon_stdin
     data:
-      brightness_pct: 15
-    target:
-      entity_id: light.master_bathroom
-  - service: light.turn_on
-    data: {}
-    target:
-      entity_id: light.wled_master_shower_niche
-  - service: light.turn_on
-    data: {}
-    target:
-      entity_id: light.wled_master_shower_niche_master
+      addon: 15d21743_samba_backup
+      input: restore-sensor
   mode: single

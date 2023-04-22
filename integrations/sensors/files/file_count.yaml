@@ -1,35 +1,26 @@
 - platform: folder
-  folder: /config/www/sounds/coffee_maker
+  folder: /media/sounds/coffee_maker
 
 - platform: folder
-  folder: /config/www/images/icons
+  folder: /media/sounds/coffee_maker/halloween
 
 - platform: folder
-  folder: /config/www/sounds/coffee_maker/halloween
+  folder: /media/sounds/coffee_maker/christmas
 
 - platform: folder
-  folder: /config/www/sounds/coffee_maker/christmas
+  folder: /media/sounds/holidays/newyearseve
 
 - platform: folder
-  folder: /config/www/sounds/holidays/newyearseve
+  folder: /media/sounds/holidays/newyearsday
 
 - platform: folder
-  folder: /config/www/sounds/holidays/newyearsday
+  folder: /media/sounds/pepito
 
 - platform: folder
-  folder: /config/www/sounds/pepito
+  folder: /media/documents/
 
 - platform: folder
-  folder: /config/www/pdf
-
-- platform: folder
-  folder: /config/www/pdf/taxes
-
-- platform: folder
-  folder: /config/www/images/cameras/camera2
-
-- platform: folder
-  folder: /config/www/images/cameras
+  folder: /media/documents/taxes
 
 - platform: template
   sensors:
@@ -38,13 +29,10 @@
       value_template: "{{ states.sensor.taxes.attributes.number_of_files }}"
     pdf_inbox:
       friendly_name: Inbox Count
-      value_template: "{{ states.sensor.pdf.attributes.number_of_files }}"
+      value_template: "{{ states.sensor.documents.attributes.number_of_files }}"
     #coffee_commercials:
     #  friendly_name: Number of Coffee Commercials
     #  value_template: "{{ states.sensor.coffee.attributes.number_of_files }}"
-    sensor_icons:
-      friendly_name: Number of Sensor Icons
-      value_template: "{{ states.sensor.icons.attributes.number_of_files }}"
     halloween_sounds:
       friendly_name: Number of Halloween Sounds
       value_template: "{{ states.sensor.halloween.attributes.number_of_files }}"
@@ -61,9 +49,6 @@
     #images_camera_2:
     #  friendly_name: Total Camera 2 Images
     #  value_template: "{{ states.sensor.camera2.number_of_files }}"
-    images_all_cameras:
-      friendly_name: Total Camera Images
-      value_template: "{{ states.sensor.cameras.number_of_files }}"
     taco_percent:
       friendly_name: Taco Percent
       value_template: >

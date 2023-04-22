@@ -1,0 +1,3 @@
+platform: feedparser
+name: Renovation
+feed_url: 'https://homeassistant.jongriffith.com/feed_rss_created.xml'

@@ -18,6 +18,7 @@ include:
     - number
     - automation
     - media_player
+    - climate
   #    - alarm_control_panel
   #    - automation
   #    - binary_sensor
@@ -33,6 +34,7 @@ include:
     - sensor.udmpro
     - sensor.us860w
     - binary_sensor.3d_timelapse_switch
+    - device_tracker.ubuntu_server_ns1
     - sensor.multisensor_2_temperature
     - binary_sensor.multisensor_2_motion
     - sensor.multisensor_2_humidity
@@ -49,8 +51,11 @@ include:
     - binary_sensor.g3*motion
     - binary_sensor.*_motion
     - binary_sensor.amcrest*
-    - sensor.u_by_moen*
+    - sensor.moen*
     - counter.*
+    - binary_sensor.dishwasher*
+    - sensor.dishwasher*
+    - lock.*
 #    - sensor.ender3_switch
 #    - sensor.coffee_maker_status
 #    - sensor.desklamp1_status

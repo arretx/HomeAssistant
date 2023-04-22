@@ -12,12 +12,15 @@ homeassistant:
         - 192.168.1.132
         - 192.168.1.191
         - 192.168.1.97
+        - 192.168.2.188
+        - 192.168.2.214
       allow_bypass_login: false
     - type: homeassistant
   customize: !include customize.yaml
 frontend:
   extra_module_url:
     - /local/community/lovelace-card-mod/card-mod.js
+    - /local/refresh.js
   themes: !include_dir_merge_named themes/
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
@@ -51,6 +54,7 @@ history:
       - device_tracker
 influxdb: !include_dir_merge_named integrations/influxdb/
 input_boolean: !include_dir_merge_named integrations/input_boolean/
+input_button: !include_dir_merge_named integrations/input_buttons/
 input_datetime: !include_dir_merge_named integrations/input_datetime/
 input_number: !include_dir_merge_named integrations/input_number/
 input_select: !include_dir_merge_named integrations/input_select/
@@ -71,18 +75,21 @@ notify: !include_dir_merge_list integrations/notify/
 proximity: !include_dir_merge_named integrations/proximity/
 recorder: !include_dir_merge_named integrations/recorder/
 rest_command: !include_dir_merge_named integrations/rest_command/
-# spotify: !include_dir_merge_named integrations/spotify/
+#spotify: !include_dir_merge_named integrations/spotify/
 sensor: !include_dir_merge_list integrations/sensors/
 #folder_watcher: !include_dir_merge_list integrations/folder_watcher/
 scene: !include scenes.yaml
 script: !include scripts.yaml
+spotcast:
+  sp_dc: !secret sp_dc
+  sp_key: !secret sp_key
 template: !include_dir_merge_list integrations/template/
 tts: !include_dir_merge_list integrations/tts/
 # twilio: !include_dir_merge_named integrations/twilio/
 # samsungtv: !include_dir_merge_list integrations/samsungtv/
 # wake_on_lan:
 zone: !include_dir_merge_list zones/ # Zones
-# zoneminder: !include_dir_merge_list integrations/zoneminder/
+#zoneminder: !include_dir_merge_list integrations/zoneminder/
 #zwave: !include_dir_merge_named zwave/ # Zwave Config flig
 
 ffmpeg:
@@ -99,3 +106,6 @@ wemo:
   #static:
   #  - 192.168.1.60 # Patio Lights
   #  - 192.168.1.61 # Entertainment Center
+
+shell_command:
+  mount_nas_folder: mkdir -p /media/nasfiles;mount -t nfs4 192.168.1.140:/mnt/user/Media/Inbound/Scanner /media/nasfiles

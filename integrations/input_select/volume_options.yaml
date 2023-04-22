@@ -42,3 +42,10 @@ theme_holiday:
     - "Easter"
     - "Independence Day"
     - "Valentine's Day"
+
+season:
+  options:
+    - "Winter"
+    - "Summer"
+    - "Fall"
+    - "Spring"

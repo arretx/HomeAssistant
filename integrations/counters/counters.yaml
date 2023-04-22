@@ -5,3 +5,11 @@ garbage_disposal:
 halloween_sounds:
   name: Front Patio Halloween Sounds
   restore: true
+
+doorbell_front_patio:
+  name: Front Patio Doorbell
+  restore: true
+
+baby_napping:
+  name: Naps Taken by Evelyn
+  restore: true

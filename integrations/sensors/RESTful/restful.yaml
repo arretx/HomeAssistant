@@ -1,64 +1,97 @@
 - platform: rest
-  name: Inbox
+  name: Tasks Inbox
   method: GET
   resource: "https://api.todoist.com/sync/v9/projects/get_data"
   params:
-    token: !secret todoist_api_token
-    project_id: 1251368857
+    project_id: !secret todoist_project_id_1
+  headers:
+    Authorization: !secret todoist_api_token
   value_template: "{{ value_json['project']['id'] }}"
   json_attributes:
     - project
     - items
-  scan_interval: 30
+  scan_interval: 60
 
 - platform: rest
-  name: Household Tasks
+  name: Tasks Personal
   method: GET
   resource: "https://api.todoist.com/sync/v9/projects/get_data"
   params:
-    token: !secret todoist_api_token
-    project_id: 2297623587
+    project_id: !secret todoist_project_id_2
+  headers:
+    Authorization: !secret todoist_api_token
   value_template: "{{ value_json['project']['id'] }}"
   json_attributes:
     - project
     - items
-  scan_interval: 30
+  scan_interval: 60
 
 - platform: rest
-  name: Renovation Tasks
+  name: Tasks Household
   method: GET
   resource: "https://api.todoist.com/sync/v9/projects/get_data"
   params:
-    token: !secret todoist_api_token
-    project_id: 2297987063
+    project_id: !secret todoist_project_id_3
+  headers:
+    Authorization: !secret todoist_api_token
   value_template: "{{ value_json['project']['id'] }}"
   json_attributes:
     - project
     - items
-  scan_interval: 30
+    - sections
+  scan_interval: 60
 
 - platform: rest
-  name: Things To Do
+  name: Tasks Renovations
   method: GET
   resource: "https://api.todoist.com/sync/v9/projects/get_data"
   params:
-    token: !secret todoist_api_token
-    project_id: 2300217795
+    project_id: !secret todoist_project_id_4
+  headers:
+    Authorization: !secret todoist_api_token
   value_template: "{{ value_json['project']['id'] }}"
   json_attributes:
     - project
     - items
-  scan_interval: 30
+  scan_interval: 60
 
 - platform: rest
-  name: Brainstorming
+  name: Tasks Things to Do
   method: GET
   resource: "https://api.todoist.com/sync/v9/projects/get_data"
   params:
-    token: !secret todoist_api_token
-    project_id: 2300218121
+    project_id: !secret todoist_project_id_5
+  headers:
+    Authorization: !secret todoist_api_token
   value_template: "{{ value_json['project']['id'] }}"
   json_attributes:
     - project
     - items
-  scan_interval: 30
+  scan_interval: 60
+
+- platform: rest
+  name: Tasks Testing
+  method: GET
+  resource: "https://api.todoist.com/sync/v9/projects/get_data"
+  params:
+    project_id: !secret todoist_project_id_6
+  headers:
+    Authorization: !secret todoist_api_token
+  value_template: "{{ value_json['project']['id'] }}"
+  json_attributes:
+    - project
+    - items
+  scan_interval: 60
+
+- platform: rest
+  name: Tasks Completed
+  method: GET
+  resource: "https://api.todoist.com/sync/v9/completed/get_all"
+  #params:
+  #  project_id: !secret todoist_project_id_7
+  headers:
+    Authorization: !secret todoist_api_token
+  value_template: "Ok"
+  json_attributes:
+    - items
+  scan_interval: 60

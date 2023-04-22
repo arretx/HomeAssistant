@@ -1,0 +1,76 @@
+- sensor:
+    - name: Hour
+      state: >
+        {% set hour = now().strftime('%-I') %}
+        {{hour}}
+    - name: Month
+      state: >
+        {% if now().month == 1 -%}
+        January
+        {% elif now().month == 2 -%}
+        February
+        {% elif now().month == 3 -%}
+        March
+        {% elif now().month == 4 -%}
+        April
+        {% elif now().month == 5 -%}
+        May
+        {% elif now().month == 6 -%}
+        June
+        {% elif now().month == 7 -%}
+        July
+        {% elif now().month == 8 -%}
+        August
+        {% elif now().month == 9 -%}
+        September
+        {% elif now().month == 10 -%}
+        October
+        {% elif now().month == 11 -%}
+        November
+        {% elif now().month == 12 -%}
+        December
+        {%- endif %}
+    - name: "Day"
+      state: >
+        {% if now().strftime('%w') == "0" %}
+        Sunday
+        {% elif now().strftime('%w') == "1" %}
+        Monday
+        {% elif now().strftime('%w') == "2" %}
+        Tuesday
+        {% elif now().strftime('%w') == "3" %}
+        Wednesday
+        {% elif now().strftime('%w') == "4" %}
+        Thursday
+        {% elif now().strftime('%w') == "5" %}
+        Friday
+        {% elif now().strftime('%w') == "6" %}
+        Saturday
+        {% endif %}
+    - name: "Major Holiday"
+      state: >
+        {% if now().month == 1 -%}
+        None
+        {% elif now().month == 2 -%}
+        Valentine's Day
+        {% elif now().month == 3 -%}
+        None
+        {% elif now().month == 4 -%}
+        None
+        {% elif now().month == 5 -%}
+        None
+        {% elif now().month == 6 -%}
+        None
+        {% elif now().month == 7 -%}
+        Independence Day
+        {% elif now().month == 8 -%}
+        None
+        {% elif now().month == 9 -%}
+        None
+        {% elif now().month == 10 -%}
+        Halloween
+        {% elif now().month == 11 -%}
+        Thanksgiving
+        {% elif now().month == 12 -%}
+        Christmas
+        {%- endif %}

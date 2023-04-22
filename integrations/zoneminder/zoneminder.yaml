@@ -1,0 +1,7 @@
+#- host: 192.168.1.140:8443
+#  path: /zm
+#  path_zms: /zm/cgi-bin/nph-zms
+#  ssl: true
+#  verify_ssl: false
+#  username: !secret ZM_user
+#  password: !secret ZM_password
