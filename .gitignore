@@ -27,3 +27,4 @@ secrets.yaml
 zw*.xml
 custom_components
 integrations/camera/cameras.yaml
+lms/*
