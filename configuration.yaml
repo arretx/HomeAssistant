@@ -69,6 +69,7 @@ light: !include_dir_merge_list integrations/lights/ # Light Switches
 #mqtt: !include_dir_merge_named integrations/mqtt/ #MQTT Server on Ubuntu
 media_player: !include_dir_merge_list integrations/media_players/
 media_source:
+my:
 # neato: !include_dir_merge_named integrations/robots/ # Botvac
 notify: !include_dir_merge_list integrations/notify/
 #octoprint: !include_dir_merge_named integrations/octoprint/
