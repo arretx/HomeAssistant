@@ -35,15 +35,6 @@ include:
     - sensor.us860w
     - binary_sensor.3d_timelapse_switch
     - device_tracker.ubuntu_server_ns1
-    - sensor.multisensor_2_temperature
-    - binary_sensor.multisensor_2_motion
-    - sensor.multisensor_2_humidity
-    - sensor.guest_bathroom_temperature
-    - sensor.guest_bathroom_humidity
-    - sensor.multisensor_1_temperature
-    - sensor.multisensor_1_humidity
-    - sensor.master_bedroom_temperature
-    - sensor.master_bedroom_humidity
   entity_globs:
     - fan.*
     - light.*
@@ -51,7 +42,13 @@ include:
     - binary_sensor.g3*motion
     - binary_sensor.*_motion
     - binary_sensor.amcrest*
+    - sensor.master*
+    - sensor.guest*
+    - sensor.refrigerator*
+    - sensor.freezer*
     - sensor.moen*
+    - sensor.multisensor*
+    - binary_sensor.multisensor*
     - counter.*
     - binary_sensor.dishwasher*
     - sensor.dishwasher*
