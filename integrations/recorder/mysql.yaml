@@ -43,6 +43,7 @@ include:
     - binary_sensor.*_motion
     - binary_sensor.amcrest*
     - sensor.master*
+    - sensor.pepito*
     - sensor.guest*
     - sensor.refrigerator*
     - sensor.freezer*
@@ -52,7 +53,9 @@ include:
     - counter.*
     - binary_sensor.dishwasher*
     - sensor.dishwasher*
+    - scene.*
     - lock.*
+    - vacuum.*
 #    - sensor.ender3_switch
 #    - sensor.coffee_maker_status
 #    - sensor.desklamp1_status

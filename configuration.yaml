@@ -42,7 +42,6 @@ calendar: !include_dir_merge_named integrations/calendar/
 counter: !include_dir_merge_named integrations/counters/
 device_tracker: !include_dir_merge_list integrations/device_tracker/
 feedreader: !include_dir_merge_named integrations/feedreader/
-# google: !include_dir_merge_named integrations/google/
 group: !include_dir_merge_list integrations/group/
 history:
   exclude:
@@ -52,27 +51,16 @@ history:
       - calendar
       - camera
       - device_tracker
-#influxdb: !include_dir_merge_named integrations/influxdb/
 input_boolean: !include_dir_merge_named integrations/input_boolean/
 input_button: !include_dir_merge_named integrations/input_buttons/
 input_datetime: !include_dir_merge_named integrations/input_datetime/
 input_number: !include_dir_merge_named integrations/input_number/
 input_select: !include_dir_merge_named integrations/input_select/
 light: !include_dir_merge_list integrations/lights/ # Light Switches
-#life360:
-#  circles:
-#    exclude:
-#      - "Family"
-#  show_as_state:
-#    - driving
-#    - moving
 #mqtt: !include_dir_merge_named integrations/mqtt/ #MQTT Server on Ubuntu
-media_player: !include_dir_merge_list integrations/media_players/
 media_source:
 my:
-# neato: !include_dir_merge_named integrations/robots/ # Botvac
 notify: !include_dir_merge_list integrations/notify/
-#octoprint: !include_dir_merge_named integrations/octoprint/
 proximity: !include_dir_merge_named integrations/proximity/
 recorder: !include_dir_merge_named integrations/recorder/
 rest_command: !include_dir_merge_named integrations/rest_command/
@@ -85,13 +73,13 @@ spotcast:
   sp_dc: !secret sp_dc
   sp_key: !secret sp_key
 template: !include_dir_merge_list integrations/template/
+timer: !include_dir_merge_named integrations/timers/
 tts: !include_dir_merge_list integrations/tts/
 # twilio: !include_dir_merge_named integrations/twilio/
 # samsungtv: !include_dir_merge_list integrations/samsungtv/
 # wake_on_lan:
 zone: !include_dir_merge_list zones/ # Zones
 #zoneminder: !include_dir_merge_list integrations/zoneminder/
-#zwave: !include_dir_merge_named zwave/ # Zwave Config flig
 
 ffmpeg:
 logbook:
@@ -104,9 +92,17 @@ sun:
 cloud:
 wemo:
   discovery: true
-  #static:
-  #  - 192.168.1.60 # Patio Lights
-  #  - 192.168.1.61 # Entertainment Center
-
 shell_command:
   mount_nas_folder: mkdir -p /media/nasfiles;mount -t nfs4 192.168.1.140:/mnt/user/Media/Inbound/Scanner /media/nasfiles
+ynab:
+  api_key: !secret ynab_api_key
+  name: "My YNAB Budget"
+  currency: "$"
+  accounts:
+    - "Wells Personal Checking"
+    - "Business Checking"
+    - "Emergency Fund"
+    - "Business Annual Expenses"
+    - "Income Tax Savings"
+    - "Remodeling Fund"
+    - "Chateau De Vie Mortgage"

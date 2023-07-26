@@ -1,0 +1,31 @@
+{
+  "nodes": {
+    "452a716a_efba5": {
+      "lastPayload": {
+        "state": 23,
+        "attributes": {}
+      }
+    },
+    "5d2c591c_007a88": {
+      "isEnabled": false
+    },
+    "89c62cdbe610945f": {
+      "isEnabled": true
+    },
+    "9ebc7cc69635e920": {
+      "isEnabled": true
+    },
+    "7f36a638ebd6d515": {
+      "lastPayload": {
+        "state": 0,
+        "attributes": {}
+      }
+    },
+    "6c3508b2fcc8a647": {
+      "lastPayload": {
+        "state": 7847,
+        "attributes": {}
+      }
+    }
+  }
+}

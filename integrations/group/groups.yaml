@@ -11,8 +11,8 @@ living_room:
     - light.living_room
     - light.living_room_fan_light
     - light.entertainment_center
-lights:
-  name: Lights
+lights_all:
+  name: All Lights
   entities:
     - light.living_room
     - light.living_room_fan_light
@@ -26,6 +26,45 @@ lights:
     - light.entertainment_center
     - light.walk_in_closet
     - light.workshop
+
+lights_master_bedroom:
+  name: Master Bedroom Lights
+  entities:
+    - light.master_bedroom
+    - light.master_bathroom
+
+lights_living_room:
+  name: Living Room Lights
+  entities:
+    - light.living_room
+    - light.living_room_fan_light
+
+lights_kitchen_area:
+  name: Kitchen Area Lights
+  entities:
+    - light.kitchen
+    - light.dining_room
+
+lights_west_wing:
+  name: Lights West Wing
+  entities:
+    - light.master_bedroom
+    - light.master_bathroom
+    - light.hallway
+    - light.workshop
+    - light.guest_bath
+    - light.walk_in_closet
+    - light.laundry_room_lights
+
+lights_east_wing:
+  name: Lights East Wing
+  entities:
+    - light.kitchen
+    - light.dining_room
+    - light.patio_lights
+    - light.living_room
+    - light.living_room_fan_light
+
 people:
   name: Occupants
   entities:

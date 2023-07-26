@@ -1,4 +1,26 @@
 - sensor:
+    - name: "ynab_need_approval"
+      state: >
+        {{ state_attr('sensor.my_ynab_budget','need_approval')}}
+    - name: "ynab_budgeted_this_month"
+      state: >
+        {{ state_attr('sensor.my_ynab_budget','budgeted_this_month')}}
+    - name: "ynab_activity_this_month"
+      state: >
+        {{ state_attr('sensor.my_ynab_budget','activity_this_month')}}
+    - name: "ynab_age_of_money"
+      state: >
+        {{ state_attr('sensor.my_ynab_budget','age_of_money')}}
+    - name: "ynab_total_balance"
+      state: >
+        {{ state_attr('sensor.my_ynab_budget','total_balance')}}
+    - name: "ynab_uncleared_transactions"
+      state: >
+        {{ state_attr('sensor.my_ynab_budget','uncleared_transactions')}}
+    - name: "ynab_overspent_categories"
+      state: >
+        {{ state_attr('sensor.my_ynab_budget','overspent_categories')}}
+- sensor:
     - name: Hour
       state: >
         {% set hour = now().strftime('%-I') %}

@@ -1,3 +1,4 @@
-timer:
-  shower:
-    duration: "00:05:00"
+shower:
+  duration: "00:05:00"
+taco:
+  duration: "00:05:00"

@@ -1,0 +1,12 @@
+- trigger:
+    - platform: webhook
+      webhook_id: -DeIxsmG4iJTTKNEdKjRz2x-Z
+  sensor:
+    - name: "Legacy Wiki"
+      state: "{{ trigger.json.event }}"
+      attributes:
+        description: "{{ trigger.json.text }}"
+        date_time: "{{trigger.json.triggered_at}}"
+        url: "{{ trigger.json.url }}"
+        related_item_name: "{{ trigger.json.related_item.name }}"
+        summary: "{{ trigger.json.related_item.current_revision.summary }}"

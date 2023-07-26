@@ -3,13 +3,5 @@
   entity_id: switch.patio_lights
 
 - platform: switch
-  name: Entertainment Center
-  entity_id: switch.entertainment_center
-
-- platform: switch
-  name: Workshop Desk Lamp
-  entity_id: switch.sonoff_desk_lamp_1
-
-- platform: switch
   name: Laundry Room Lights
   entity_id: switch.laundry_room

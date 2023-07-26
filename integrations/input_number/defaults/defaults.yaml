@@ -1,0 +1,59 @@
+light_brightness_kitchen:
+  name: Kitchen Light Brightness
+  min: 0
+  max: 100
+  step: 1
+
+light_brightness_dining_room:
+  name: Dining Room Light Brightness
+  min: 0
+  max: 100
+  step: 1
+
+light_brightness_living_room:
+  name: Living Room Light Brightness
+  min: 0
+  max: 100
+  step: 1
+
+light_brightness_living_room_fan:
+  name: Living Room Fan Light Brightness
+  min: 0
+  max: 100
+  step: 1
+
+light_brightness_hallway:
+  name: Hallway Light Brightness
+  min: 0
+  max: 100
+  step: 1
+
+light_brightness_master_bedroom:
+  name: Master Bedroom Light Brightness
+  min: 0
+  max: 100
+  step: 1
+
+light_brightness_master_bathroom:
+  name: Master Bathroom Light Brightness
+  min: 0
+  max: 100
+  step: 1
+
+light_brightness_workshop:
+  name: Workshop Light Brightness
+  min: 0
+  max: 100
+  step: 1
+
+light_brightness_guest_bathroom:
+  name: Guest Bathroom Light Brightness
+  min: 0
+  max: 100
+  step: 1
+
+light_brightness_walk_in_closet:
+  name: Walk-in Closet Light Brightness
+  min: 0
+  max: 100
+  step: 1
