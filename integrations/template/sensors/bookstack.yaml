@@ -1,6 +1,6 @@
 - trigger:
     - platform: webhook
-      webhook_id: -DeIxsmG4iJTTKNEdKjRz2x-Z
+      webhook_id: -PcvyDij0NdDUVPY1efuc7O2G
   sensor:
     - name: "Legacy Wiki"
       state: "{{ trigger.json.event }}"

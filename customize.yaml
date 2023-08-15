@@ -1,9 +1,11 @@
 sensor.date_time:
-  sound_event: 'true'
+  sound_event: "true"
 switch.coffee_maker:
-  audio_enabled: 'true'
+  audio_enabled: "true"
 input_boolean.test_switch:
-  audio_enabled: 'true'
+  audio_enabled: "true"
 switch.grandfather_clock_2: {}
 fan.workshop:
-  manual_override: 'false'
+  manual_override: "false"
+media_player.zone_11:
+  entity_picture:

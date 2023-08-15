@@ -1,0 +1,15 @@
+- platform: universal
+  name: Media Master Control
+  children:
+    - media_player.guest_bathroom_speaker
+    - media_player.kitchen_speaker
+    - media_player.living_room_speaker
+    - media_player.zone_11
+    - media_player.zone_12
+    - media_player.zone_13
+    - media_player.zone_14
+    - media_player.zone_15
+    - media_player.zone_16
+    - media_player.picoreplayer
+    - media_player.picoreplayer2
+    - media_player.spotify_home_assistant

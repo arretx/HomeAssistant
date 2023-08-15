@@ -96,3 +96,14 @@
         {% elif now().month == 12 -%}
         Christmas
         {%- endif %}
+
+## YNAB Hidden Card Sensor
+- sensor:
+    - name: "Hide YNAB Transaction Card"
+      state: "{{states.sensor.ynab_need_approval.state == '0'}}"
+- sensor:
+    - name: "YNAB Remaining This Month"
+      state: "{{ (state_attr('sensor.my_ynab_budget', 'budgeted_this_month') + state_attr('sensor.my_ynab_budget','activity_this_month'))|round(2,'floor')}}"
+- sensor:
+    - name: "YNAB Income vs Budget"
+      state: "{{(states.input_number.ynab_expected_income.state | float | round(2, 'floor') - states.sensor.ynab_budgeted_this_month.state | float | round(2, 'floor'))|round(2,'floor')}}"

@@ -1,0 +1,7 @@
+fair_play_cleaning_garbage:
+  name: Fair Play Cleaning Garbage
+  restore: true
+
+fair_play_cleaning_toilets:
+  name: Fair Play Cleaning Toilets
+  restore: true

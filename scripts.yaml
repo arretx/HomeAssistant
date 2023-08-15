@@ -1,23 +1,514 @@
 desk_up:
   sequence:
-
 desk_down:
   sequence:
-
 desk_stop:
   sequence:
-
 test_number:
   sequence:
-
 daily_water_add_jon:
   sequence:
-
 daily_water_add_melanie:
   sequence:
-
 pelican_poop:
   sequence:
-
-giant_taco:
+button_one:
   sequence:
+fair_play_cleaning_garbage:
+  sequence:
+fair_play_cleaning_toilets:
+  sequence:
+
+fair_play_cards_reset_all:
+  alias: Reset All Fair Play Cards
+  sequence:
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_tidying
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_mail
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_childcare_helpers
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_cleaning
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_dishes
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_dry_cleaning
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_garbage
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_groceries
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_home_furnishings
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_home_goods
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_hosting
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_laundry
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_lawn
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_maintenance
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_meals_school_lunch
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_meals_weekday_breakfast
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_meals_weekday_dinner
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_meals_weekend
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_memories
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_money_manager
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_mortgage
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_home_storage
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_wild_death
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_wild_first_year
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_wild_glitch
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_wild_aging_ailing_parent
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_wild_job_loss
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_wild_moving
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_wild_new_job
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_wild_renovation
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_wild_serious_illness
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_wild_welcoming_child
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_teacher_comm_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_self_care_2
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_self_care_1
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_school_transitions_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_school_service_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_mental_health_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_bathing_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_bedtime_routine
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_birth_control
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_clothes_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_dental_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_diapering
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_estate_planning
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_friendship_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_grooming_1
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_grooming_2
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_health_insurance
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_homework
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_medical_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_parents
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_pets
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_caregiving_morning_routine
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_transportation
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_travel
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_tutoring
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_weekend_family
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_auto
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_birthdays_others
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_breaks_non_summer
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_breaks_summer
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_calendar
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_cash
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_charity
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_civic_engagement
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_coupons
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_electronics
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_extracurricular_non
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_extracurricular_sports
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_first_aid
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_packing_local
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_packing_travel
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_returns
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_school_forms
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_out_social_plans
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_discipline_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_comfort
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_partner_coach
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_showing_up
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_spirituality
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_thank_you_notes
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_values_good_deeds
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_watching_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_adult_friendships_1
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_adult_friendships_2
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_bday_celebrations_ours
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_extended
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_fun_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_gestures_kids
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_gifts_fam
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_gifts_vip
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_holiday_cards
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_holidays
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_informal_education
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_magical_beings
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_marriage_romance
+    - service: input_select.select_option
+      data:
+        option: Unassigned
+      target:
+        entity_id: input_select.fair_play_card_magic_questions_kids

@@ -2,3 +2,5 @@ shower:
   duration: "00:05:00"
 taco:
   duration: "00:05:00"
+button_one:
+  duration: "00:00:00"

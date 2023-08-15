@@ -29,3 +29,6 @@ taco_c:
 nap_time_baby:
   name: Evelyn Napping
   icon: mdi:baby-face
+
+button_one:
+  name: Button One

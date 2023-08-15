@@ -21,8 +21,8 @@
       addon: 15d21743_samba_backup
       input: restore-sensor
   mode: single
-- id: '1689559542401'
-  alias: Bookstack Light Trigger
+- id: '1691031034837'
+  alias: Bookstack Updates
   description: ''
   trigger:
   - platform: webhook
@@ -30,25 +30,7 @@
     - POST
     - PUT
     local_only: true
-    webhook_id: -DeIxsmG4iJTTKNEdKjRz2x-Z
+    webhook_id: -PcvyDij0NdDUVPY1efuc7O2G
   condition: []
-  action:
-  - service: notify.mobile_app_jon
-    data:
-      message: '{{ state_attr(''sensor.legacy_wiki'',''description'') }}'
-      title: Griffith Legacy Wiki Update
-      data:
-        actions:
-        - action: Open Page
-          title: Open Safari
-          uri: '{{ state_attr(''sensor.legacy_wiki'',''url'') }}'
-  - service: notify.mobile_app_melanie
-    data:
-      message: '{{ state_attr(''sensor.legacy_wiki'',''description'') }}'
-      title: Griffith Legacy Wiki Update
-      data:
-        actions:
-        - action: Open Page
-          title: Open Safari
-          uri: '{{ state_attr(''sensor.legacy_wiki'',''url'') }}'
+  action: []
   mode: single

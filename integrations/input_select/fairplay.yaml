@@ -1,0 +1,685 @@
+fair_play_card_wild_death:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_wild_first_year:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_wild_glitch:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_wild_aging_ailing_parent:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_wild_job_loss:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_wild_moving:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_wild_new_job:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_wild_renovation:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_wild_serious_illness:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_wild_welcoming_child:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_transportation:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_travel:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_tutoring:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_weekend_family:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_auto:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_birthdays_others:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_breaks_non_summer:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_breaks_summer:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_calendar:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_cash:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_charity:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_civic_engagement:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_coupons:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_electronics:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_extracurricular_non:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_extracurricular_sports:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_first_aid:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_packing_local:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_packing_travel:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_returns:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_school_forms:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_out_social_plans:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_teacher_comm_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_self_care_2:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_self_care_1:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_school_transitions_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_school_service_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_mental_health_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_bathing_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_bedtime_routine:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_birth_control:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_clothes_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_dental_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_diapering:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_estate_planning:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_friendship_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_grooming_1:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_grooming_2:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_health_insurance:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_homework:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_medical_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_parents:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_pets:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_caregiving_morning_routine:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_tidying:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_mail:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_childcare_helpers:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_cleaning:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_dishes:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_dry_cleaning:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_garbage:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_groceries:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_home_furnishings:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_home_goods:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_hosting:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_laundry:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_lawn:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_maintenance:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_meals_school_lunch:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_meals_weekday_breakfast:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_meals_weekday_dinner:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_meals_weekend:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_memories:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_money_manager:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_mortgage:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_home_storage:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_discipline_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_comfort:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_partner_coach:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_showing_up:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_spirituality:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_thank_you_notes:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_values_good_deeds:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_watching_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_adult_friendships_1:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_adult_friendships_2:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_bday_celebrations_ours:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_extended:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_fun_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_gestures_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_gifts_fam:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_gifts_vip:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_holiday_cards:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_holidays:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_informal_education:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_magical_beings:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_marriage_romance:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"
+
+fair_play_card_magic_questions_kids:
+  options:
+    - "Unassigned"
+    - "Jon"
+    - "Melanie"
+    - "Remove"

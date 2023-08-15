@@ -33,7 +33,6 @@ http:
   ip_ban_enabled: false
   login_attempts_threshold: 5
 api:
-
 amcrest: !include_dir_merge_list integrations/amcrest/
 automation: !include automations.yaml
 binary_sensor: !include_dir_merge_list integrations/binary_sensors/
@@ -58,6 +57,7 @@ input_number: !include_dir_merge_named integrations/input_number/
 input_select: !include_dir_merge_named integrations/input_select/
 light: !include_dir_merge_list integrations/lights/ # Light Switches
 #mqtt: !include_dir_merge_named integrations/mqtt/ #MQTT Server on Ubuntu
+media_player: !include_dir_merge_list integrations/media_player/
 media_source:
 my:
 notify: !include_dir_merge_list integrations/notify/
@@ -87,7 +87,7 @@ logbook:
     domains:
       - light
 stream:
-discovery:
+#discovery:
 sun:
 cloud:
 wemo:
@@ -106,3 +106,10 @@ ynab:
     - "Income Tax Savings"
     - "Remodeling Fund"
     - "Chateau De Vie Mortgage"
+    - "MRA Funds"
+    - "8384 E. Solano Drive"
+    - "2013 Kia Sorento"
+    - "2004 Chevy Trailblazer"
+    - "2004 Vespa Piaggio ET4"
+    - "JP Morgan Pension"
+    - "Betterment Roth IRA"

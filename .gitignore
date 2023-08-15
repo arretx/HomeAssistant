@@ -25,6 +25,6 @@ OZW_Log*
 pyozw.sqlite
 secrets.yaml
 zw*.xml
-custom_components
+custom_components/*
 integrations/camera/cameras.yaml
 lms/*

@@ -112,3 +112,17 @@ master_work_light_level:
   max: 100
   step: 1
   mode: slider
+
+button_one:
+  name: Button One
+  min: 0
+  max: 100
+  step: 1
+  mode: slider
+
+ynab_expected_income:
+  name: YNAB Expected Income
+  min: 0
+  max: 100000
+  step: 1
+  mode: box
